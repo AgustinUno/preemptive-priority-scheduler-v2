@@ -5,6 +5,8 @@ var prcsHold = document.getElementById('prcsInput').value
 //decrements the input value
 const chart = document.querySelector('#chart-section')
 const gtitle = document.querySelector('#gantTitle')
+var showGantt = document.getElementById("gantt-chart");
+var showSolutions = document.getElementById("solutions");
 
 
 //global declarations
@@ -40,6 +42,8 @@ function increment() {
 //selects the input as number of process
 function confirm() {
   nOfprcs = prcsHold
+  showGantt.style.display = 'none'
+  showSolutions.style.display = 'none'
   createTable()
 }
 
@@ -118,6 +122,10 @@ function createTable() {
 }
 
 function fetch() {
+  showGantt.style.display = 'none'
+  showSolutions.style.display = 'none'
+
+
   let incProcess = 0
   //receives the given
   process = [] //resets array every compute
@@ -166,7 +174,7 @@ function compute() {
 
   while (completed < nOfprcs) {
     let highestPrioIndex = 0
-    let holdPriority = 99
+    let holdPriority = 99999
     let holdArrival = 0
 
     for (let x = 0; x < nOfprcs; x++) {
@@ -282,12 +290,12 @@ function compute() {
     //holds the previous index
     prevIndex = highestPrioIndex
   }
+  showDisplay()
 
-  printPrcssTimes()
 }
 
 function ganttChart() {
-  
+
 
   let prevGantt = 0
   // Clear previous table content
@@ -342,35 +350,88 @@ function toggleDarkMode() {
 }
 
 function output() {
-  let outputHtml = ''
 
-  let totalWatingTime = 0
+  
+
+let outputHtml = ''
+let totalturnAroundTime = 0;
+
+for (let x = 0; x < nOfprcs; x++) {
+  let y = 0
+  let turnAroundTime = process[x].endTime - process[x].arrivalTime
+
+  outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].endTime} - ${process[x].arrivalTime} = ${turnAroundTime}</p>`
+
+  totalturnAroundTime += turnAroundTime
+}
+
+let averageturnAroundTime = totalturnAroundTime / nOfprcs
+let formattedAverageturnAroundTime = averageturnAroundTime.toFixed(2)
+
+outputHtml += `<p id="totaltat"> TTAT = ${totalturnAroundTime} / ${nOfprcs}</p>`
+outputHtml += `<p id="atat" >ATAT = ${formattedAverageturnAroundTime}ms</p>`
+
+document.getElementById('TATout').innerHTML = outputHtml;
+
+
+outputHtml = ''
+  //WT---------------------------------------------------------------------
+  let totalWaitingTime = 0
 
   for (let x = 0; x < nOfprcs; x++) {
     let y = 0
     let waitingTime = process[x].startTime - process[x].arrivalTime
 
-    outputHtml += `<p> <span style="color: green;">P${process[x].Prcsname} &nbsp;&nbsp;</span> ${process[x].startTime} - ${process[x].arrivalTime} = ${waitingTime}</p>
-    `
+    
+    
+if  (process[x].nxtStartTime[0] != 0) {
 
-    while (process[x].nxtStartTime[y] != 0) {
-      outputHtml += `<p>  ${process[x].nxtStartTime[y]}</p>`
-      y++
+  outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;(${process[x].startTime} - ${process[x].arrivalTime}) + `;
+  
+  while (process[x].nxtStartTime[y] != 0) {
+    let nxtWaitingtime = process[x].nxtStartTime[y] - process[x].stopTime[y];
+    waitingTime += nxtWaitingtime;
+    if (process[x].nxtStartTime[y+1] != 0) {
+
+      outputHtml += `(${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) + `
+
     }
+    else{
+      outputHtml += ` (${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) = ${waitingTime}</p>`
+    } 
+    y++
+  }
+}
+else{
+  outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].startTime} - ${process[x].arrivalTime} = ${waitingTime}</p>`
+}
+    
 
-    totalWatingTime += waitingTime
+    totalWaitingTime += waitingTime
   }
 
-  let averageWaitingTime = totalWatingTime / nOfprcs
+  let averageWaitingTime = totalWaitingTime / nOfprcs
 
-  outputHtml += '<p>----------------</p>'
-  outputHtml += `<p>TWT = ${totalWatingTime} / ${nOfprcs}</p>`
-  outputHtml += `<p>AWT = ${averageWaitingTime}ms</p>`
+  let formattedAverageWaitingTime = averageWaitingTime.toFixed(2);
+
+  outputHtml += `<p id="totalwt">TWT = ${totalWaitingTime} / ${nOfprcs}</p>`
+  outputHtml += `<p id="awt"> AWT = ${formattedAverageWaitingTime}ms</p>`
 
   document.getElementById('TWTout').innerHTML = outputHtml;
 
-  //WT
+
+
+
+
+ 
+
 }
 
+function showDisplay() {
+  var displayValue = "flex";
 
+  showGantt.style.display = displayValue;
+  showSolutions.style.display = displayValue;
+  printPrcssTimes()
+}
 

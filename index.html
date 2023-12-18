@@ -1,95 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Preemptive Priority</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="Assets/pictures/Algo.png" type="image/png" />
-  </head>
 
-  <body>
-    <!-- <div class="glow"></div>  -->
-    <!-- glow effect -->
-    <button class="menu" onclick="toggleDarkMode()"></button>
-    <section id="title">
-      <div class="title-container">PREEMPTIVE PRIORITY</div>
-      <div class="subtitle">CPU SCHEDULING ALGORITHM</div>
-    </section>
-    
-    <div id="custom-container">      
-      <section id="input-segment">
-        <div class="input-title">Input</div>
-        <div class="titleprocess">Number of Process</div>
-        <div class="input-line">
-          <button class="decrebtn" onclick="decrement()">-</button>
-          <div class="input-container">
-            <input
-              id="prcsInput"
-              class="nOpcrs"
-              placeholder="Enter value"
-              value="4"
-              readonly
-              oninput="validateInput();"
-            />
-          </div>
-          <button class="increbtn" onclick="increment()">+</button>
-          <button class="ok" onclick="confirm()"></button>
-          
-        </div>
-      </section>
-      <section id="table-container">
-        <table id="prcsTbl"></table>
-        <div id="submit"></div>
-      </section>      
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preemptive Priority</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="Assets/pictures/Algo.png" type="image/png" />
+</head>
+<body>
+  <!-- <div class="glow"></div>  -->
+  <!-- glow effect -->
+  <button class="menu" onclick="toggleDarkMode()"></button>
+  <div class="info">
+    <div class="icon">
+
     </div>
+  </div>
+  <section id="title">
+    <div class="title-container">PREEMPTIVE PRIORITY</div>
+    <div class="subtitle">CPU SCHEDULING ALGORITHM</div>
+  </section>
 
-    <div id="output-container">
-
-    
-  
-      <!-- <section id="solutions">
-        <div id="tatvert">
-          <div id="TAT">Turnaround Time</div>
-          <div id="TATout">
-            P1 0 - 0 = 0<br />
-            P2 0 - 0 = 0<br />
-            P3 0 - 0 = 0<br />
-            P4 0 - 0 = 0<br />
-            ---------------- <br />
-            TTAT = 0 / 0<br />
-            ATAT = 0ms
-          </div>
+  <div id="custom-container">
+    <section id="input-segment">
+      <div class="input-title">Input</div>
+      <div class="titleprocess">Number of Process</div>
+      <div class="input-line">
+        <button class="decrebtn" onclick="decrement()">-</button>
+        <div class="input-container">
+          <input id="prcsInput" class="nOpcrs" placeholder="Enter value" value="4" readonly
+            oninput="validateInput();" />
         </div>
-        <div id="twtvert">
-          <div id="TWT">Waiting Time</div>
-          <div id="TWTout">
-            P1 0 - 0 = 0<br />
-            P2 0 - 0 = 0<br />
-            P3 0 - 0 = 0<br />
-            P4 0 - 0 = 0<br />
-            ----------------<br />
-            TWT = 0 / 0<br />
-            AWT = 0ms
-          </div>
-        </div>
-      </section>-->
+        <button class="increbtn" onclick="increment()">+</button>
+        <button class="ok" onclick="confirm()"></button>
 
-      <section id="gantt-chart">
-        <div id="gantTitle"></div>
-        <section id="chart-section">
-          <div id="ch">
-            
-          </div>
-          <table id="chart">
-            
-          </table>
-        </section>
+      </div>
+    </section>
+    <section id="table-container">
+      <table id="prcsTbl"></table>
+      <div id="submit"></div>
+    </section>
+  </div>
+
+  <div id="output-container">  
+
+
+    <section id="gantt-chart"style="display: none;">
+      <div id="gantTitle"></div>
+      <section id="chart-section">
         
       </section>
-    </div>
 
-    <div class="author">crafted by jason & justine  &nbsp;&nbsp;|&nbsp;&nbsp;  for educational purposes only</div>
-    <script src="script.js"></script>
+
+
+
+    </section>
+
+    <section id="solutions" style="display: none;">
+      <div id="tatvert">
+        <div id="TAT-title">Turnaround Time</div>
+        <div id="TATout">
+          P1 0 - 0 = 0<br />
+          P2 0 - 0 = 0<br />
+          P3 0 - 0 = 0<br />
+          P4 0 - 0 = 0<br />
+          ---------------- <br />
+          TTAT = 0 / 0<br />
+          ATAT = 0ms
+        </div>
+      </div>
+      <div id="twtvert">
+        <div id="TWT-title">Waiting Time</div>
+        <div id="TWTout">
+          P1 0 - 0 = 0<br />
+          P2 0 - 0 = 0<br />
+          P3 0 - 0 = 0<br />
+          P4 0 - 0 = 0<br />
+          ----------------<br />
+          TWT = 0 / 0<br />
+          AWT = 0ms
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="author">crafted by jason & justine &nbsp;&nbsp;|&nbsp;&nbsp; for educational purposes only
+    &nbsp;&nbsp;|&nbsp;&nbsp; Operating Systems 2023</div>
+  <script src="script.js"></script>
   </body>
+
 </html>
