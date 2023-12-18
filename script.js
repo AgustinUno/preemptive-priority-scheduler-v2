@@ -321,9 +321,10 @@ function ganttChart() {
   ganttTitle.classList.add('content')
 
   let ganttendMsCell = document.createElement('div')
-
+  let prevGround=0
   while (gantt[xq].Prcsname != null) {
     let y=0;
+    console.log('ganttturn '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
     // Create cell for Gantt chart
     let ganttCell = document.createElement('div')
     let ganttMsCell = document.createElement('div')   
@@ -334,6 +335,7 @@ function ganttChart() {
         while (gantt[y].Prcsname != null){
           if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0){
             gantt[y].ganttRound ++
+            
           }
           console.log('mainstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)            
           y++;
@@ -341,10 +343,11 @@ function ganttChart() {
       
       }
       else{
+        prevGround = gantt[y].ganttRound
         ganttMsCell.textContent = gantt[xq].nxtStartTime[gantt[xq].ganttRound-1]
         ganttMs.appendChild(ganttMsCell)
         while (gantt[y].Prcsname != null){
-          if (gantt[y].Prcsname == gantt[xq].Prcsname){
+          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == prevGround){
             
             gantt[y].ganttRound ++
           }
