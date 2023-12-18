@@ -230,28 +230,18 @@ section{
 
 .ch{
   display: flex;
-  gap: 3em;  
+  gap: 2px;  
+  background-color: grey;
+  padding: 2px;
+  border-radius: 5px;
+  
 }
 
-/*
-#chart > tr {
+.ch > div{
+  border-radius: 5px;
   padding: 10px;
-  left: 100px;
-  margin-left: -20%;
-  height: fit-content;
-  font-size: 20px;
+  background-color: white;
 }
-#chart > tr > th {
-  padding-top: 3%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  border-color: #000000f0;
-}
-
-#chart > tr > th:hover {
-  background-color: #0000001c;
-  transition: background-color 0.3s ease;
-}*/
 
 button {
   font-family: "inter";

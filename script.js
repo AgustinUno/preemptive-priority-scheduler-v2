@@ -2,9 +2,10 @@ var nOfprcs = 4
 let prevNOfprcs = 0
 let round = 0
 var prcsHold = document.getElementById('prcsInput').value
-
 //decrements the input value
-const chart = document.querySelector('#chart')
+const chart = document.querySelector('#chart-section')
+const gtitle = document.querySelector('#gantTitle')
+
 
 //global declarations
 let input2 = 0
@@ -21,7 +22,7 @@ let gantt = []
 createTable()
 
 //checks if the input is in range of 4 - 8
-function decrement () {
+function decrement() {
   if (prcsHold > 4) {
     prcsHold--
   }
@@ -29,7 +30,7 @@ function decrement () {
   document.getElementById('prcsInput').value = prcsHold
 }
 //inrements the input value
-function increment () {
+function increment() {
   if (prcsHold < 8) {
     prcsHold++
   }
@@ -37,17 +38,18 @@ function increment () {
   document.getElementById('prcsInput').value = prcsHold
 }
 //selects the input as number of process
-function confirm () {
+function confirm() {
   nOfprcs = prcsHold
   createTable()
 }
 
-function createTable () {
+function createTable() {
   const table = document.querySelector('#prcsTbl')
 
   // Clear previous table content
   table.innerHTML = ''
   chart.innerHTML = ''
+  gtitle.innerHTML = ''
 
   // Create the header row
   let headerRow = document.createElement('tr')
@@ -88,7 +90,7 @@ function createTable () {
     input4.type = 'number'
     input4.id = 'prio' + (x + 1)
     input4.value = ''
-   
+
     // Set input placeholders
 
     input2.placeholder = '0'
@@ -115,7 +117,7 @@ function createTable () {
     "<button id='cmpte' onClick=fetch()>Solve</button>"
 }
 
-function fetch () {
+function fetch() {
   let incProcess = 0
   //receives the given
   process = [] //resets array every compute
@@ -152,7 +154,7 @@ function fetch () {
   }
 }
 
-function compute () {
+function compute() {
   let num = 0
   let completed = 0
   let currentTime = 0
@@ -284,20 +286,22 @@ function compute () {
   printPrcssTimes()
 }
 
-function ganttChart () {
- 
+function ganttChart() {
+  
+
   let prevGantt = 0
   // Clear previous table content
   chart.innerHTML = ''
+  gtitle.innerHTML = ''
 
   // Create row for Gantt chart
   let ganttRow = document.createElement('div')
   let xq = 0
 
   let ganttTitle = document.createElement('div')
- ganttTitle.textContent = 'Gantt Chart'
+  ganttTitle.textContent = 'Gantt Chart'
   document.getElementById('gantTitle').appendChild(ganttTitle)
-  ganttTitle.classList.add('content') 
+  ganttTitle.classList.add('content')
 
   while (gantt[xq].Prcsname != null) {
     // Create cell for Gantt chart
@@ -316,7 +320,7 @@ function ganttChart () {
   output()
 }
 
-function printPrcssTimes () {
+function printPrcssTimes() {
   console.log('Process\tStart TIme\tEnd Time\n')
   for (let x = 0; x < nOfprcs; x++) {
     let y = 0
@@ -328,16 +332,16 @@ function printPrcssTimes () {
     console.log('\t\t' + process[x].endTime)
   }
 
-  
+
   ganttChart()
-  
+
 }
 
-function toggleDarkMode () {
+function toggleDarkMode() {
   document.body.classList.toggle('dark-mode')
 }
 
-function output () {
+function output() {
   let outputHtml = ''
 
   let totalWatingTime = 0
