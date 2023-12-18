@@ -38,7 +38,7 @@
 
 .menu:hover {
   transform: scale(1.2);
-  filter: invert(100%);
+  filter: invert(40%);
   box-shadow: 0 0 100px 200px rgba(255, 255, 255, 0);
   /* Adjusted box-shadow for the glow effect */
 }
@@ -97,6 +97,19 @@
 .menu:not(:hover)::before {
   opacity: 0;
 }
+#data{
+  text-align: center;
+  margin-top: 15px;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.1s ease, transform 0.2s ease;
+  color: #000000;
+}
+
+.info:hover #data {
+  
+transform: scale(1);
+opacity: 1;
+}
 
 .info {
   width: 50px;
@@ -104,6 +117,7 @@
   max-width: 3000px;
   max-height: 1000px;
   position: fixed;
+
   top: 30px;
   /* Adjust the top position to align with the top of #custom-container */
   right: 160px;
@@ -112,7 +126,7 @@
   background: #ffffff;
   box-shadow: 0px 0px 13.95px rgba(0, 0, 0, 0.1);
 
-  transition: width 0.3s ease;
+  transition: width 0.2s ease;
 }
 
 .info:hover {
@@ -133,34 +147,33 @@
   background: #27a1b1;
   box-shadow: 0px 0px 10px rgba(252, 249, 249, 0.288);
   background-image: url('Assets/pictures/warning.png');
-  background-size: cover;
+  
   background-size: 30px;
   background-repeat: no-repeat;
   background-position-x: 10px;
   background-position-y: center;
   filter: invert(1);
-  transition: width 0.3s ease;
-  overflow: hidden; /* Hide overflow to prevent content from showing when not expanded */
-}
+  transition: width 0.2s ease;
+  overflow: hidden; }
 
 .error:hover {
   width: 400px;
 }
 
 .warn {
-  display: none; /* Initially hide the info */
   padding: 10px; /* Add padding to the info */
-  color: white; 
+  color: rgb(0, 0, 0); 
   text-align: center;
+ margin-top: 5px;
   opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.1s ease, transform 0.2s ease;
 }
 
 .error:hover .warn {
-  display: block;
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: scale(1); 
 }
+
 
 .icon {
   width: 50px;
@@ -230,7 +243,7 @@ body {
 }
 
 .text-container {
-  font-family: 'Inter2';
+  font-family: 'Inter';
   margin-top: 3%;
   display: flex;
   justify-content: center;
@@ -239,6 +252,7 @@ body {
 }
 
 .subtitle {
+  font-family: 'Inter2';
   display: flex;
   margin-top: -0.6%;
   justify-content: center;
