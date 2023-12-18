@@ -23,9 +23,7 @@
   color: black;
   border-radius: 35px;
   background: #ffffff;
-
-  box-shadow: 1px 1.74375px 10px rgba(0, 0, 0, 0.24);
-
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.24);
   background-image: url('Assets/pictures/moon-svgrepo-com.png');
   background-size: cover;
   background-size: 35px;
@@ -112,13 +110,56 @@
   color: black;
   border-radius: 35px;
   background: #ffffff;
-  box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 13.95px rgba(0, 0, 0, 0.1);
 
-  transition: width 0.5s ease-in-out;
+  transition: width 0.3s ease;
 }
 
 .info:hover {
   width: 400px;
+}
+
+
+.error {
+  width: 50px;
+  height: 50px;
+  max-width: 3000px;
+  max-height: 1000px;
+  position: fixed;
+  top: 30px;
+  left: 97px;
+  color: black;
+  border-radius: 35px;
+  background: #27a1b1;
+  box-shadow: 0px 0px 10px rgba(252, 249, 249, 0.288);
+  background-image: url('Assets/pictures/warning.png');
+  background-size: cover;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  background-position-y: center;
+  filter: invert(1);
+  transition: width 0.3s ease;
+  overflow: hidden; /* Hide overflow to prevent content from showing when not expanded */
+}
+
+.error:hover {
+  width: 400px;
+}
+
+.warn {
+  display: none; /* Initially hide the info */
+  padding: 10px; /* Add padding to the info */
+  color: white; 
+  text-align: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.error:hover .warn {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .icon {
@@ -300,13 +341,15 @@ td {
 
 #prcsTbl>tr>td>input:focus {
   outline: none;
+  
 }
 
 #prcsTbl tr td:hover,
 #prcsTbl tr td:focus {
-  background-color: #0000001c;
+  background-color: #00000041;
   transition: background-color 0.4s ease-in-out;
   border-radius: 10px;
+ 
 }
 
 #prcsTbl>tr>td {
@@ -346,7 +389,7 @@ td {
   padding-top: 3%;
   border-collapse: collapse;
   border-radius: 10px;
-  border-color: #000000f0;
+  border-color: #0e0101ea;
 }
 
 #chart>tr>th:hover {
