@@ -88,29 +88,7 @@ function createTable () {
     input4.type = 'number'
     input4.id = 'prio' + (x + 1)
     input4.value = ''
-
-    let showinput2 = document.getElementById('arTime' + (x + 1))
-    let showinput3 = document.getElementById('brsTime' + (x + 1))
-    let showinput4 = document.getElementById('prio' + (x + 1))
-    /*
-    // Check if the value is -1
-if (showinput2.value === -1) {
-  // Add a class to the element
-  showinput2.classList.add("hideValue");
-}
-
-// Check if the value is -1
-if (showinput3.value === -1) {
-  // Add a class to the element
-  showinput3.classList.add("hideValue");
-}
-
-// Check if the value is -1
-if (showinput4.value === -1) {
-  // Add a class to the element
-  showinput4.classList.add("hideValue");
-}*/
-
+   
     // Set input placeholders
 
     input2.placeholder = '0'
@@ -134,7 +112,7 @@ if (showinput4.value === -1) {
   }
 
   document.getElementById('submit').innerHTML =
-    "<button id='cmpte' onClick=fetch()>solve</button>"
+    "<button id='cmpte' onClick=fetch()>Solve</button>"
 }
 
 function fetch () {
@@ -304,33 +282,37 @@ function compute () {
   }
 
   printPrcssTimes()
-  ganttChart()
 }
 
 function ganttChart () {
+ 
   let prevGantt = 0
   // Clear previous table content
   chart.innerHTML = ''
 
   // Create row for Gantt chart
-  let ganttRow = document.createElement('tr')
+  let ganttRow = document.createElement('div')
   let xq = 0
+
+  let ganttTitle = document.createElement('div')
+ ganttTitle.textContent = 'Gantt Chart'
+  document.getElementById('gantTitle').appendChild(ganttTitle)
+  ganttTitle.classList.add('content') 
 
   while (gantt[xq].Prcsname != null) {
     // Create cell for Gantt chart
-    let ganttCell = document.createElement('th')
+    let ganttCell = document.createElement('div')
     if (gantt[xq].Prcsname != prevGantt) {
       ganttCell.textContent = 'P' + gantt[xq].Prcsname
       ganttRow.appendChild(ganttCell)
       console.log('P' + gantt[xq].Prcsname)
       prevGantt = gantt[xq].Prcsname
     }
-
     xq++
   }
-  ganttRow.classList.add('fadeIn')
+  ganttRow.classList.add('ch')
 
-  document.getElementById('chart').appendChild(ganttRow)
+  document.getElementById('chart-section').appendChild(ganttRow)
   output()
 }
 
@@ -345,7 +327,10 @@ function printPrcssTimes () {
     }
     console.log('\t\t' + process[x].endTime)
   }
-  output()
+
+  
+  ganttChart()
+  
 }
 
 function toggleDarkMode () {
@@ -378,7 +363,7 @@ function output () {
   outputHtml += `<p>TWT = ${totalWatingTime} / ${nOfprcs}</p>`
   outputHtml += `<p>AWT = ${averageWaitingTime}ms</p>`
 
-  document.getElementById('TWTout').innerHTML = outputHtml
+  document.getElementById('TWTout').innerHTML = outputHtml;
 
   //WT
 }

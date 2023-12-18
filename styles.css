@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Inter";
   src: local("Inter"),
-    url("Assets/Google-sans-Font-Family/ProductSans-Bold.ttf")
+    url("Assets/Inter/Inter-VariableFont_slnt\,wght.ttf")
       format("truetype");
   font-weight: lighter;
 }
@@ -57,73 +57,82 @@ body {
 
 body {
   font-family: "Inter";
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
   justify-content: center;
-  height: 100vh;
   background-color: #f5f5f5;
+  padding: 0% 10%;
+}
+#title{
+  display: block;
+  text-align: center;
 }
 
-/* main panel */
-#custom-container {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  height: 80%;
-  max-width: 3000px;
-  max-height: 1000px;
-  border-radius: 35px;
-  background: #fff;
-  box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  position: fixed;
-  min-width: 1200px;
-  backdrop-filter: blur(100px);
-  opacity: 90%; /* Align with the top of the viewport */
-}
-
-.note {
-  display: flex;
-  justify-content: center;
-  color: rgb(0, 0, 0);
-  font-weight: 100;
-}
-
-.text-container {
-  font-family: "Inter2";
-  margin-top: 3%;
-  display: flex;
-  justify-content: center;
+.title-container {
   font-size: 55px;
   font-weight: 1000;
 }
 
-.subtitle {
-  display: flex;
-  margin-top: -0.6%;
-  justify-content: center;
+.subtitle {  
   font-weight: 800;
 }
 
-.process {
-  margin-top: 20px;
+/* main panel */
+#custom-container {  
+  margin-top: 16px;
   display: flex;
+  max-width: 3000px;
+  max-height: 1000px;
+  transition: box-shadow 0.3s ease;
+  min-width: 500px;
+  backdrop-filter: blur(100px);
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: 30px;
-  font-weight: 800;
+  gap: 1em 3em;
+}
+
+section{
+  padding: 20px;
+  border-radius: 7px;
+}
+
+#input-segment {
+  font-weight: bold;
+  background-color: white;
+  box-shadow: gray;
+  min-width: 200px;
+  height:min-content;
+}
+
+.input-title{
+  font-size: 28px;
+}
+
+.titleprocess {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .input-line {
   display: flex;
   justify-content: center;
-  margin: 15px;
-  margin-bottom: 5px;
   align-items: center;
 }
+
 #prcsInput {
   font-size: 18px;
 }
+
+.nOpcrs {
+  font-family: "Inter";
+  height: 40px;
+  width: 15px;
+  margin: 5px;
+  font-size: 15px;
+  border: none;
+  text-align: center;
+}
+
 .ok {
   background-color: rgb(102, 255, 0);
   margin-left: 5px;
@@ -134,74 +143,37 @@ body {
   background-position: center;
 }
 
-#input-segment {
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
+#table-container{
+  background-color: white;
+  flex: 50%;
+  width: 50px;
+  max-width: 700px;
+  min-width: 300px;
+  overflow: auto;
 }
 
-.nOpcrs {
-  font-family: "Inter";
-  border-radius: 6px;
-  height: 35px;
-  width: 15px;
-  margin: 5px;
-  font-size: 15px;
-  border: none;
-  text-align: center;
+#prcsTbl{
+  padding: 30px;
+  background-color: #00000021;
+  border-radius: 10px;
+  animation: fadeBackground 0.5s ease-in-out;
+  box-sizing: border-box;
+  
 }
 
-#cmpte {
-  font-family: "Inter";
-  width: 10%;
-  margin-top: 0.5%;
-  margin-left: 8%;
-  height: 33px;
-  background-color: rgb(102, 255, 0);
-  transition: transform 0.2s ease-in-out;
-  padding: 5px;
-  position: relative;
-}
-
-#error-container {
-  display: flex;
-  justify-content: center;
-}
-
-table {
-  border: none;
-  text-align: center;
-  width: 50%;
-  margin-top: 2%;
-  margin-left: 8%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: center;
-  border: 1px solid #a59f9f00;
-  border-collapse: collapse;
-  width: 25%;
-  height: 50%;
-  padding: 1px;
-}
-
-#ph {
-  text-align: center;
-}
 
 #prcsTbl > tr > td > input {
   border: none;
   text-align: center;
   font-family: "Inter";
   background: transparent;
-
 }
 
 #prcsTbl > tr > td > input:focus {
   outline: none;
 }
+
+/*table animation*/
 #prcsTbl tr td:hover,
 #prcsTbl tr td:focus {
   background-color: #0000001c;
@@ -209,38 +181,66 @@ td {
   border-radius: 10px;
 }
 
-#prcsTbl > tr > td {
-  height: 30px;
+#cmpte {
+  margin-top: 10px;
+  font-family: "Inter";
+  font-size: medium;
+  padding: 10px;
+  min-width: 70px;
+  min-height: 40px;
+  background-color: rgb(38, 132, 255);
+  transition: transform 0.2s ease-in-out;
 }
+
+#output-container{
+  display: flex;
+  justify-content: center;
+}
+
+
 
 #gantt-chart {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-left: 8%;
-  /* Adjust the left margin as needed */
-  margin-right: 8%;
-  /* Adjust the right margin as needed */
+  width: fit-content;
+  flex-wrap: wrap;
 }
 
-#gantTitle {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 1px;
-  /* Adjust the bottom margin as needed */
+#gantTitle > .content{
+  flex: 100%;
+  font-size: 30px;
+  font-weight: bolder;
+  text-align: center;
 }
 
-#chart > tr {
+#gantTitle{
   display: flex;
-  justify-content: space-evenly;
-  flex-wrap: nowrap;
+  flex: 100%;
+  justify-content: center;
+}
+
+
+
+#chart-section{
+  display: flex;
+  flex: 100%; 
+  padding: 10px;
+  justify-content: center;
+}
+
+.ch{
+  display: flex;
+  gap: 3em;  
+}
+
+/*
+#chart > tr {
+  padding: 10px;
   left: 100px;
   margin-left: -20%;
-  height: 100px;
+  height: fit-content;
   font-size: 20px;
 }
-/* content of the gannt chart */
 #chart > tr > th {
   padding-top: 3%;
   border-collapse: collapse;
@@ -251,17 +251,9 @@ td {
 #chart > tr > th:hover {
   background-color: #0000001c;
   transition: background-color 0.3s ease;
-}
-#chart {
-  justify-content: center;
-}
-
-.hideValue {
-  display: none;
-}
+}*/
 
 button {
-  position: relative;
   font-family: "inter";
   height: 30px;
   width: 30px;
@@ -369,11 +361,7 @@ increbtn:active {
   }
 }
 
-#prcsTbl {
-  background-color: #00000021;
-  border-radius: 10px;
-  animation: fadeBackground 0.5s ease-in-out;
-}
+
 .glow {
   position: absolute;
   width: 1px;
