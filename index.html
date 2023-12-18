@@ -1,81 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Preemptive Priority</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="Assets/pictures/Algo.png" type="image/png" />
-  </head>
 
-  <body>
-    <!-- <div class="glow"></div>  -->
-    <!-- glow effect naglalag na putangina HAHHAHAHA-->
-    <button class="menu" onclick="toggleDarkMode()"></button>
-    <div class="info"><div class="icon">
-      
-    </div></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preemptive Priority</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="Assets/pictures/Algo.png" type="image/png" />
+</head>
 
-    <div id="custom-container">
-      <div class="text-container">PREEMPTIVE PRIORITY</div>
-      <div class="subtitle">CPU SCHEDULING ALGORITHM</div>
-      <section id="input-segment">
-        <div class="process">NO. OF PROCESSES</div>
-        <div class="input-line">
-          <button class="decrebtn" onclick="decrement()">-</button>
-          <div class="input-container">
-            <input
-              id="prcsInput"
-              class="nOpcrs"
-              placeholder="Enter value"
-              value="4"
-              readonly
-              oninput="validateInput();"
-            />
-          </div>
-          <button class="increbtn" onclick="increment()">+</button>
-          <button class="ok" onclick="confirm()"></button>
-        </div>
-      </section>
+<body>
+  <!-- <div class="glow"></div>  -->
+  <!-- glow effect naglalag na putangina HAHHAHAHA-->
+  <button class="menu" onclick="toggleDarkMode()"></button>
+  <div class="info">
+    <div class="icon">
 
-      <section id="table-container">
-        <div id="solutions">
-          <div id="tatvert">
-            <div id="TAT">Turnaround Time</div>
-            <div id="TATout">
-              P1 0 - 0 = 0<br />
-              P2 0 - 0 = 0<br />
-              P3 0 - 0 = 0<br />
-              P4 0 - 0 = 0<br />
-              ---------------- <br />
-              TTAT = 0 / 0<br />
-              ATAT = 0ms
-            </div>
-          </div>
-          <div id="twtvert">
-            <div id="TWT">Waiting Time</div>
-            <div id="TWTout">
-              P1 0 - 0 = 0<br />
-              P2 0 - 0 = 0<br />
-              P3 0 - 0 = 0<br />
-              P4 0 - 0 = 0<br />
-              ----------------<br />
-              TWT = 0 / 0<br />
-              AWT = 0ms
-            </div>
-          </div>
-        </div>
-        <table id="prcsTbl"></table>
-        <div id="submit"></div>
-      </section>
-
-      <section id="gantt-chart">
-        <div id="gantTitle">Gantt chart</div>
-        <table id="chart"></table>
-      </section>
     </div>
+  </div>
 
-    <div class="author">crafted by jason & justine  &nbsp;&nbsp;|&nbsp;&nbsp;  for educational purposes only &nbsp;&nbsp;|&nbsp;&nbsp; Operating Systems 2023</div>
-    <script src="script.js"></script>
-  </body>
+  <div id="custom-container">
+    <div class="text-container">PREEMPTIVE PRIORITY</div>
+    <div class="subtitle">CPU SCHEDULING ALGORITHM</div>
+    <section id="input-segment">
+      <div class="process">NO. OF PROCESSES</div>
+      <div class="input-line">
+        <button class="decrebtn" onclick="decrement()">-</button>
+        <div class="input-container">
+          <input id="prcsInput" class="nOpcrs" placeholder="Enter value" value="4" readonly
+            oninput="validateInput();" />
+        </div>
+        <button class="increbtn" onclick="increment()">+</button>
+        <button class="ok" onclick="confirm()"></button>
+      </div>
+    </section>
+
+    <section id="table-container">
+      <div id="solutions">
+        <div id="tatvert">
+          <div id="TAT">Turnaround Time</div>
+          <div id="TATout">
+            P1 0 - 0 = 0<br />
+            P2 0 - 0 = 0<br />
+            P3 0 - 0 = 0<br />
+            P4 0 - 0 = 0<br />
+            ---------------- <br />
+            TTAT = 0 / 0<br />
+            ATAT = 0ms
+          </div>
+        </div>
+        <div id="twtvert">
+          <div id="TWT">Waiting Time</div>
+          <div id="TWTout">
+            P1 0 - 0 = 0<br />
+            P2 0 - 0 = 0<br />
+            P3 0 - 0 = 0<br />
+            P4 0 - 0 = 0<br />
+            ----------------<br />
+            TWT = 0 / 0<br />
+            AWT = 0ms
+          </div>
+        </div>
+      </div>
+      <table id="prcsTbl"></table>
+      <div id="submit"></div>
+    </section>
+
+    <section id="gantt-chart">
+      <div id="gantTitle">Gantt chart</div>
+      <table id="chart"></table>
+    </section>
+  </div>
+
+  <div class="author">crafted by jason & justine &nbsp;&nbsp;|&nbsp;&nbsp; for educational purposes only
+    &nbsp;&nbsp;|&nbsp;&nbsp; Operating Systems 2023</div>
+  <script src="script.js"></script>
+</body>
+
 </html>

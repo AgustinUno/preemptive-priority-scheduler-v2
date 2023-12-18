@@ -21,7 +21,7 @@ let gantt = []
 createTable()
 
 //checks if the input is in range of 4 - 8
-function decrement () {
+function decrement() {
   if (prcsHold > 4) {
     prcsHold--
   }
@@ -29,7 +29,7 @@ function decrement () {
   document.getElementById('prcsInput').value = prcsHold
 }
 //inrements the input value
-function increment () {
+function increment() {
   if (prcsHold < 8) {
     prcsHold++
   }
@@ -37,12 +37,12 @@ function increment () {
   document.getElementById('prcsInput').value = prcsHold
 }
 //selects the input as number of process
-function confirm () {
+function confirm() {
   nOfprcs = prcsHold
   createTable()
 }
 
-function createTable () {
+function createTable() {
   const table = document.querySelector('#prcsTbl')
 
   // Clear previous table content
@@ -137,7 +137,7 @@ if (showinput4.value === -1) {
     "<button id='cmpte' onClick=fetch()>solve</button>"
 }
 
-function fetch () {
+function fetch() {
   let incProcess = 0
   //receives the given
   process = [] //resets array every compute
@@ -174,7 +174,7 @@ function fetch () {
   }
 }
 
-function compute () {
+function compute() {
   let num = 0
   let completed = 0
   let currentTime = 0
@@ -307,7 +307,7 @@ function compute () {
   ganttChart()
 }
 
-function ganttChart () {
+function ganttChart() {
   let prevGantt = 0
   // Clear previous table content
   chart.innerHTML = ''
@@ -334,7 +334,7 @@ function ganttChart () {
   output()
 }
 
-function printPrcssTimes () {
+function printPrcssTimes() {
   console.log('Process\tStart TIme\tEnd Time\n')
   for (let x = 0; x < nOfprcs; x++) {
     let y = 0
@@ -348,11 +348,11 @@ function printPrcssTimes () {
   output()
 }
 
-function toggleDarkMode () {
+function toggleDarkMode() {
   document.body.classList.toggle('dark-mode')
 }
 
-function output () {
+function output() {
   let outputHtml = ''
 
   let totalWatingTime = 0

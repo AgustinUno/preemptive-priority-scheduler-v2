@@ -1,16 +1,14 @@
 @font-face {
-  font-family: "Inter";
-  src: local("Inter"),
-    url("Assets/Google-sans-Font-Family/ProductSans-Bold.ttf")
-      format("truetype");
+  font-family: 'Inter';
+  src: local('Inter'),
+    url('Assets/Google-sans-Font-Family/ProductSans-Bold.ttf') format('truetype');
   font-weight: lighter;
 }
 
 @font-face {
-  font-family: "Inter2";
-  src: local("Inter2"),
-    url("Assets/Google-sans-Font-Family/ProductSans-Regular.ttf")
-      format("truetype");
+  font-family: 'Inter2';
+  src: local('Inter2'),
+    url('Assets/Google-sans-Font-Family/ProductSans-Regular.ttf') format('truetype');
   font-weight: lighter;
 }
 
@@ -20,44 +18,49 @@
   max-width: 3000px;
   max-height: 1000px;
   position: fixed;
-  top: 30px; /* Adjust the top position to align with the top of #custom-container */
+  top: 30px;
+  /* Adjust the top position to align with the top of #custom-container */
   right: 97px;
   color: black;
   border-radius: 35px;
   background: #ffffff;
 
-  box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1.74375px 10px rgba(0, 0, 0, 0.24);
 
-  background-image: url("Assets/pictures/moon-svgrepo-com.png");
+  background-image: url('Assets/pictures/moon-svgrepo-com.png');
   background-size: cover;
   background-size: 35px;
   background-repeat: no-repeat;
   background-position: center;
-  transition: transform 100ms ease, filter 800ms;
+  transition: transform 0.5s ease, filter 0.5s ease, box-shadow 0.5s ease;
 }
 
 .dark-mode .menu {
-  background-image: url("Assets/pictures/sun-2-svgrepo-com(1).png");
+  background-image: url('Assets/pictures/sun-2-svgrepo-com(1).png');
 }
 
 .menu:hover {
   transform: scale(1.2);
-  /* font-size: 2cap; */
   filter: invert(100%);
-  animation: glow 1s infinite alternate;
+  box-shadow: 0 0 100px 200px rgba(255, 255, 255, 0);
+  /* Adjusted box-shadow for the glow effect */
 }
+
 @keyframes glow {
   from {
-    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.7); /* Initial box-shadow for the glow effect */
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.082);
   }
+
   to {
-    box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.9); /* Final box-shadow for the glow effect */
+    box-shadow: 0 0 100px 200px rgba(255, 255, 255, 0.9);
   }
 }
+
 .dark-mode {
   filter: invert(1);
   background-color: #070100;
 }
+
 .author {
   position: fixed;
   bottom: 40px;
@@ -66,64 +69,72 @@
 }
 
 .menu:active {
-  animation: glow 1s infinite;
-
+  animation: glow 1s 1;
+  /* Set animation to run only once */
   filter: brightness(0.5);
   transform: scale(0.8);
 }
+
 .menu::before {
-  content: "";
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.7
-  ); /* Adjust the color and opacity as needed */
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 2s ease;
 }
 
 .menu:active::before {
   opacity: 1;
   pointer-events: auto;
 }
+
+.menu:hover::before {
+  opacity: 1;
+}
+
+.menu:not(:hover)::before {
+  opacity: 0;
+}
+
 .info {
   width: 50px;
   height: 50px;
   max-width: 3000px;
   max-height: 1000px;
   position: fixed;
-  top: 30px; /* Adjust the top position to align with the top of #custom-container */
+  top: 30px;
+  /* Adjust the top position to align with the top of #custom-container */
   right: 160px;
   color: black;
   border-radius: 35px;
   background: #ffffff;
   box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
- 
+
   transition: width 0.5s ease-in-out;
 }
 
 .info:hover {
   width: 400px;
 }
-.icon{
+
+.icon {
   width: 50px;
   height: 50px;
   max-width: 3000px;
   max-height: 1000px;
   position: fixed;
-  top: 30px; /* Adjust the top position to align with the top of #custom-container */
+  top: 30px;
+  /* Adjust the top position to align with the top of #custom-container */
   right: 160px;
-border-radius: 35px; background: #ffffff00;
-  
-  background-image: url("Assets/pictures/about-us.png");
+  border-radius: 35px;
+  background: #ffffff00;
+
+  background-image: url('Assets/pictures/about-us.png');
   background-size: cover;
   background-size: 45px;
   background-repeat: no-repeat;
@@ -134,6 +145,7 @@ border-radius: 35px; background: #ffffff00;
 body {
   transition: filter 0.3s ease-in-out, background-color 0.3s ease;
 }
+
 body,
 html {
   height: 100%;
@@ -141,7 +153,7 @@ html {
 }
 
 body {
-  font-family: "Inter";
+  font-family: 'Inter';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,7 +178,8 @@ body {
   position: fixed;
   min-width: 1200px;
   backdrop-filter: blur(100px);
-  opacity: 90%; /* Align with the top of the viewport */
+  opacity: 90%;
+  /* Align with the top of the viewport */
 }
 
 .note {
@@ -177,7 +190,7 @@ body {
 }
 
 .text-container {
-  font-family: "Inter2";
+  font-family: 'Inter2';
   margin-top: 3%;
   display: flex;
   justify-content: center;
@@ -207,13 +220,15 @@ body {
   margin-bottom: 5px;
   align-items: center;
 }
+
 #prcsInput {
   font-size: 18px;
 }
+
 .ok {
   background-color: rgb(102, 255, 0);
   margin-left: 5px;
-  background-image: url("Assets/pictures/mark.png");
+  background-image: url('Assets/pictures/mark.png');
   /* Set the path to your image */
   background-size: 15px 15px;
   background-repeat: no-repeat;
@@ -227,7 +242,7 @@ body {
 }
 
 .nOpcrs {
-  font-family: "Inter";
+  font-family: 'Inter';
   border-radius: 6px;
   height: 35px;
   width: 15px;
@@ -238,7 +253,7 @@ body {
 }
 
 #cmpte {
-  font-family: "Inter";
+  font-family: 'Inter';
   width: 10%;
   margin-top: 0.5%;
   margin-left: 8%;
@@ -277,16 +292,17 @@ td {
   text-align: center;
 }
 
-#prcsTbl > tr > td > input {
+#prcsTbl>tr>td>input {
   border: none;
   text-align: center;
-  font-family: "Inter";
+  font-family: 'Inter';
   background: transparent;
 }
 
-#prcsTbl > tr > td > input:focus {
+#prcsTbl>tr>td>input:focus {
   outline: none;
 }
+
 #prcsTbl tr td:hover,
 #prcsTbl tr td:focus {
   background-color: #0000001c;
@@ -294,7 +310,7 @@ td {
   border-radius: 10px;
 }
 
-#prcsTbl > tr > td {
+#prcsTbl>tr>td {
   height: 30px;
 }
 
@@ -316,7 +332,7 @@ td {
   /* Adjust the bottom margin as needed */
 }
 
-#chart > tr {
+#chart>tr {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: nowrap;
@@ -325,18 +341,20 @@ td {
   height: 100px;
   font-size: 20px;
 }
+
 /* content of the gannt chart */
-#chart > tr > th {
+#chart>tr>th {
   padding-top: 3%;
   border-collapse: collapse;
   border-radius: 10px;
   border-color: #000000f0;
 }
 
-#chart > tr > th:hover {
+#chart>tr>th:hover {
   background-color: #0000001c;
   transition: background-color 0.3s ease;
 }
+
 #chart {
   justify-content: center;
 }
@@ -347,7 +365,7 @@ td {
 
 button {
   position: relative;
-  font-family: "inter";
+  font-family: 'inter';
   height: 30px;
   width: 30px;
   border: none;
@@ -379,6 +397,7 @@ button:hover {
 increbtn:active {
   transform: scale(0.9);
 }
+
 increbtn:active {
   transform: scale(0.9);
 }
@@ -387,6 +406,7 @@ increbtn:active {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -401,6 +421,7 @@ increbtn:active {
     opacity: 0;
     height: 0;
   }
+
   to {
     opacity: 1;
     height: auto;
@@ -434,12 +455,15 @@ increbtn:active {
 .morphing-row:nth-child(6) {
   animation-delay: 0.1s;
 }
+
 .morphing-row:nth-child(7) {
   animation-delay: 0.12s;
 }
+
 .morphing-row:nth-child(8) {
   animation-delay: 0.14s;
 }
+
 .morphing-row:nth-child(9) {
   animation-delay: 0.16s;
 }
@@ -448,6 +472,7 @@ increbtn:active {
   from {
     background-color: #ffffff;
   }
+
   to {
     opacity: 1;
   }
@@ -458,6 +483,7 @@ increbtn:active {
   border-radius: 10px;
   animation: fadeBackground 0.5s ease-in-out;
 }
+
 .glow {
   position: absolute;
   width: 1px;
@@ -469,19 +495,23 @@ increbtn:active {
 }
 
 @keyframes moveGlow {
+
   0%,
   100% {
     left: 0;
     top: 0;
   }
+
   25% {
     left: 50%;
     top: 0;
   }
+
   50% {
     left: 50%;
     top: 50%;
   }
+
   75% {
     left: 0;
     top: 50%;
@@ -512,6 +542,7 @@ increbtn:active {
 #TATout {
   margin-top: 10px;
 }
+
 #TWTout {
   margin-top: 10px;
 }
