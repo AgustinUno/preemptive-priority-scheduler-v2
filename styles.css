@@ -25,12 +25,15 @@
   color: black;
   border-radius: 35px;
   background: #ffffff;
+
   box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
-  background-image: url("Assets/pictures/sun-2-svgrepo-com(1).png"); /* Replace 'path-to-your-icon.png' with the actual path to your icon */
+
+  background-image: url("Assets/pictures/moon-svgrepo-com.png");
   background-size: cover;
   background-size: 35px;
   background-repeat: no-repeat;
   background-position: center;
+  transition: transform 100ms ease, filter 800ms;
 }
 
 .dark-mode .menu {
@@ -38,7 +41,18 @@
 }
 
 .menu:hover {
-  background-image: url("Assets/pictures/moon-svgrepo-com.png"); /* Hover icon */
+  transform: scale(1.2);
+  /* font-size: 2cap; */
+  filter: invert(100%);
+  animation: glow 1s infinite alternate;
+}
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.7); /* Initial box-shadow for the glow effect */
+  }
+  to {
+    box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.9); /* Final box-shadow for the glow effect */
+  }
 }
 .dark-mode {
   filter: invert(1);
@@ -46,15 +60,82 @@
 }
 .author {
   position: fixed;
-  bottom: 35px;
+  bottom: 40px;
   opacity: 40%;
   font-size: 15px;
+}
+
+.menu:active {
+  animation: glow 1s infinite;
+
+  filter: brightness(0.5);
+  transform: scale(0.8);
+}
+.menu::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Adjust the color and opacity as needed */
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.5s ease;
+}
+
+.menu:active::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+.info {
+  width: 50px;
+  height: 50px;
+  max-width: 3000px;
+  max-height: 1000px;
+  position: fixed;
+  top: 30px; /* Adjust the top position to align with the top of #custom-container */
+  right: 160px;
+  color: black;
+  border-radius: 35px;
+  background: #ffffff;
+  box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
+ 
+  transition: width 0.5s ease-in-out;
+}
+
+.info:hover {
+  width: 400px;
+}
+.icon{
+  width: 50px;
+  height: 50px;
+  max-width: 3000px;
+  max-height: 1000px;
+  position: fixed;
+  top: 30px; /* Adjust the top position to align with the top of #custom-container */
+  right: 160px;
+border-radius: 35px; background: #ffffff00;
+  
+  background-image: url("Assets/pictures/about-us.png");
+  background-size: cover;
+  background-size: 45px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: width 0.5s ease-in-out;
 }
 
 body {
   transition: filter 0.3s ease-in-out, background-color 0.3s ease;
 }
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
 }
@@ -163,7 +244,7 @@ body {
   margin-left: 8%;
   height: 33px;
   background-color: rgb(102, 255, 0);
-  transition: transform 0.2s ease-in-out;
+  transition: transform 100ms ease, filter 800ms;
   padding: 5px;
   position: relative;
 }
@@ -201,7 +282,6 @@ td {
   text-align: center;
   font-family: "Inter";
   background: transparent;
-
 }
 
 #prcsTbl > tr > td > input:focus {
@@ -274,7 +354,7 @@ button {
   font-size: 20px;
   border-radius: 6px;
   color: #000000;
-  transition: transform 100ms ease, filter 100ms ease;
+  transition: transform 100ms ease, filter 800ms ease;
 }
 
 button:active {
@@ -289,7 +369,6 @@ button:hover {
 }
 
 #cmpte:active {
-  
   transform: scale(0.9);
 }
 
@@ -421,8 +500,8 @@ increbtn:active {
 }
 
 #solutions p {
-  margin: 1px; 
-  padding: 0; 
+  margin: 1px;
+  padding: 0;
 }
 
 #TAT {
