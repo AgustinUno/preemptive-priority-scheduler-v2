@@ -313,7 +313,10 @@ section{
 #chart-section{
   display: flex;
   padding: 10px;
-  justify-content: center;
+  
+  align-items:center;
+  flex-direction: column;
+  width: fit-content;
 }
 
 .ch{
@@ -322,7 +325,7 @@ section{
   background-color: grey;
   padding: 2px;
   border-radius: 5px;
-  
+max-width: fit-content;
 }
 
 .ch > div{
@@ -511,3 +514,20 @@ p{
   margin-top: 1em;
 }
 
+
+.ms-gantt{
+  position: relative;
+  display: flex;
+  gap: 2px;
+  max-width: fit-content;
+  padding: 0px 2px;
+  left:-2px;
+}
+
+.ms-gantt > div{
+  border-radius: 5px;
+  padding: 0px 10px;
+  min-width: 18px;
+  background-color: white;
+  text-align: center;
+}

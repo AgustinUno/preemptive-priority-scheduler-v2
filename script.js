@@ -1,6 +1,7 @@
 var nOfprcs = 4
 let prevNOfprcs = 0
 let round = 0
+let endmsTime = 0;
 var prcsHold = document.getElementById('prcsInput').value
 //decrements the input value
 const chart = document.querySelector('#chart-section')
@@ -153,7 +154,8 @@ function fetch() {
         remainingBurstTime: document.getElementById('brsTime' + (x + 1)).value,
         round: 0,
         stopTime: [0],
-        nxtStartTime: [0]
+        nxtStartTime: [0],
+        ganttRound: 0
       })
     }
 
@@ -252,6 +254,9 @@ function compute() {
         //declares next index as zero
         process[highestPrioIndex].nxtStartTime[startRound + 1] = 0
         console.log(
+          'P' + process[highestPrioIndex].Prcsname + 'round: ' + startRound
+        )
+        console.log(
           'start time=' + process[highestPrioIndex].nxtStartTime[startRound]
         )
         startInc++
@@ -272,6 +277,7 @@ function compute() {
 
       //increments the time (equivalent to milisecond)
       currentTime++
+      
       ////decrements the burst time of the current process
       currentProcess.remainingBurstTime--
       //increments round of the current process
@@ -287,6 +293,8 @@ function compute() {
     } else {
       currentTime++
     }
+    //end time hold
+    endmsTime = currentTime;
     //holds the previous index
     prevIndex = highestPrioIndex
   }
@@ -304,6 +312,7 @@ function ganttChart() {
 
   // Create row for Gantt chart
   let ganttRow = document.createElement('div')
+  let ganttMs = document.createElement('div')
   let xq = 0
 
   let ganttTitle = document.createElement('div')
@@ -311,20 +320,55 @@ function ganttChart() {
   document.getElementById('gantTitle').appendChild(ganttTitle)
   ganttTitle.classList.add('content')
 
+  let ganttendMsCell = document.createElement('div')
+
   while (gantt[xq].Prcsname != null) {
+    let y=0;
     // Create cell for Gantt chart
     let ganttCell = document.createElement('div')
+    let ganttMsCell = document.createElement('div')   
     if (gantt[xq].Prcsname != prevGantt) {
+      if (gantt[xq].ganttRound == 0){
+        ganttMsCell.textContent = gantt[xq].startTime
+        ganttMs.appendChild(ganttMsCell)
+        while (gantt[y].Prcsname != null){
+          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0){
+            gantt[y].ganttRound ++
+          }
+          console.log('mainstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)            
+          y++;
+        }
+      
+      }
+      else{
+        ganttMsCell.textContent = gantt[xq].nxtStartTime[gantt[xq].ganttRound-1]
+        ganttMs.appendChild(ganttMsCell)
+        while (gantt[y].Prcsname != null){
+          if (gantt[y].Prcsname == gantt[xq].Prcsname){
+            
+            gantt[y].ganttRound ++
+          }
+          console.log('nextstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
+          y++;
+        }
+        console.log( 'P'+ gantt[xq].Prcsname+ ' next start time' + gantt[xq].nxtStartTime[0] + 'round ' + gantt[xq].ganttRound + ' ')
+      }
       ganttCell.textContent = 'P' + gantt[xq].Prcsname
+      
       ganttRow.appendChild(ganttCell)
       console.log('P' + gantt[xq].Prcsname)
       prevGantt = gantt[xq].Prcsname
     }
+    
     xq++
   }
+  ganttendMsCell.textContent = endmsTime
+        ganttMs.appendChild(ganttendMsCell)
   ganttRow.classList.add('ch')
 
   document.getElementById('chart-section').appendChild(ganttRow)
+  document.getElementById('chart-section').appendChild(ganttMs)
+  ganttMs.classList.add('ms-gantt')
   output()
 }
 
@@ -366,7 +410,7 @@ for (let x = 0; x < nOfprcs; x++) {
 }
 
 let averageturnAroundTime = totalturnAroundTime / nOfprcs
-let formattedAverageturnAroundTime = averageturnAroundTime.toFixed(2)
+let formattedAverageturnAroundTime = averageturnAroundTime.toFixed(1)
 
 outputHtml += `<p id="totaltat"> TTAT = ${totalturnAroundTime} / ${nOfprcs}</p>`
 outputHtml += `<p id="atat" >ATAT = ${formattedAverageturnAroundTime}ms</p>`
@@ -412,18 +456,12 @@ else{
 
   let averageWaitingTime = totalWaitingTime / nOfprcs
 
-  let formattedAverageWaitingTime = averageWaitingTime.toFixed(2);
+  let formattedAverageWaitingTime = averageWaitingTime.toFixed(1);
 
   outputHtml += `<p id="totalwt">TWT = ${totalWaitingTime} / ${nOfprcs}</p>`
   outputHtml += `<p id="awt"> AWT = ${formattedAverageWaitingTime}ms</p>`
 
   document.getElementById('TWTout').innerHTML = outputHtml;
-
-
-
-
-
- 
 
 }
 
