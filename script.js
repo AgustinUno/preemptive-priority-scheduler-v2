@@ -523,11 +523,13 @@ function breakdownMS(){
 
   const divofms = document.querySelector('#bdms')
   divofms.innerHTML = ''  
-
-  
+  let msStartHead = document.createElement('div') 
+  msStartHead.textContent = 0
+  msStartHead.id = 'aBdms' + 0
+  document.getElementById('bdms').appendChild(msStartHead)
   while(ms!=endmsTime-1){
     let msHead = document.createElement('div')  
-    
+    ms++
    
     if ((ms%5)==0){
       msPrint = ms
@@ -535,14 +537,14 @@ function breakdownMS(){
       msHead.id = 'aBdms' + ms
       document.getElementById('bdms').appendChild(msHead)
     }
-    ms++
+    
   }
   let msEndHead = document.createElement('div') 
   if ((endmsTime -msPrint)>5){
     msEndHead.style.marginLeft =-71+(12*(endmsTime -msPrint)) + "px"
   }
   else{
-    msEndHead.style.marginLeft =-76+(12*(endmsTime -msPrint)) + "px"
+    msEndHead.style.marginLeft =-58+(12*(endmsTime -msPrint)) + "px"
   }
  
   msEndHead.textContent = endmsTime
