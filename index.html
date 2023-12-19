@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="Assets/pictures/Algo.png" type="image/png" />
 </head>
+
 <body>
   <!-- <div class="glow"></div>  -->
   <!-- glow effect -->
@@ -43,21 +44,21 @@
     </section>
   </div>
 
-  <div id="output-container">  
+  <div id="output-container" style="display: none;">
 
-
-    <section id="gantt-chart"style="display: none;">
+  <div id="ganttnsol">
+    
+    <section id="gantt-chart">
       <div id="gantTitle"></div>
-      <section id="chart-section">
-        
-      </section>
-
-
-
+      <section id="chart-section"></section>
 
     </section>
 
-    <section id="solutions" style="display: none;">
+    
+
+
+
+    <section id="solutions">
       <div id="tatvert">
         <div id="TAT-title">Turnaround Time</div>
         <div id="TATout">
@@ -83,11 +84,48 @@
         </div>
       </div>
     </section>
+
+
+  </div>
+
+
+    
+
+    <section id="gantt-breakdown">
+      <div id="gantTitle">Gantt Chart Look</div>
+      <div id="bdms">
+        <div>0</div><div>0</div><div>0</div><div>0</div><div>0</div>
+      </div>
+
+      <section id="breakdown-section">
+        <section id="prcs-id">
+          <div>P1</div>
+          <div>P2</div>
+          <div>P3</div>
+          <div>P4</div>
+          <div>P5</div>
+          <div>P6</div>
+          <div>P7</div>
+          <div>P8</div>
+        </section>
+        <section id="prcs-content">
+          <div id="bd-prcs1"></div>
+          <div id="bd-prcs2"></div>
+          <div id="bd-prcs3"></div>
+          <div id="bd-prcs4"></div>
+          <div id="bd-prcs5"></div>
+          <div id="bd-prcs6"></div>
+          <div id="bd-prcs7"></div>
+          <div id="bd-prcs8"></div>
+        </section>
+      </section>
+
+    </section>
   </div>
 
   <div class="author">crafted by jason & justine &nbsp;&nbsp;|&nbsp;&nbsp; for educational purposes only
     &nbsp;&nbsp;|&nbsp;&nbsp; Operating Systems 2023</div>
   <script src="script.js"></script>
-  </body>
+</body>
 
 </html>
