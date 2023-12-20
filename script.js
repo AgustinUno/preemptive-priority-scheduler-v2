@@ -202,27 +202,8 @@ function compute() {
       console.log('x=' + x)
     }
 
-    //checking if process arrived in time, finding the highest priority
-    for (let i = 0; i < nOfprcs; i++) {
-      if (
-        process[i].arrivalTime <= currentTime &&
-        process[i].remainingBurstTime > 0 &&
-        process[i].priority < holdPriority
-      ) {
-        //to hold the current priority
-        holdPriority = process[i].priority
-        holdArrival = process[i].arrivalTime
-        //to hold the index of the highest priority
-        highestPrioIndex = i
-      } else if (
-        process[i].arrivalTime <= currentTime &&
-        process[i].remainingBurstTime > 0 &&
-        process[i].priority == holdPriority
-      ) {
-        if (process[i].arrivalTime < holdArrival) {
-          highestPrioIndex = i
-        }
-      }
+    if(currentTime==0){
+      currentTime+=process[highestPrioIndex].arrivalTime
     }
 
     //condition to collect the the data of stop time and start of the previous process
@@ -341,17 +322,16 @@ function ganttChart() {
     let ganttMsCell = document.createElement('div')   
     if (gantt[xq].Prcsname != prevGantt) {
       if (gantt[xq].ganttRound == 0){
+      
         ganttMsCell.textContent = gantt[xq].startTime
         ganttMs.appendChild(ganttMsCell)
         while (gantt[y].Prcsname != null){
           if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0){
             gantt[y].ganttRound ++
-            
           }
           console.log('mainstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)            
           y++;
         }
-      
       }
       else{
         prevGround = gantt[y].ganttRound
@@ -397,12 +377,6 @@ function printPrcssTimes() {
     }
     console.log('\t\t' + process[x].endTime)
   }
-
-
-
-
-
-
   ganttChart()
 
 }
