@@ -136,7 +136,7 @@ function fetch() {
     let burstTime = document.getElementById('brsTime' + (x + 1)).value
     let priority = document.getElementById('prio' + (x + 1)).value
 
-    if (arrivalTime != '' && burstTime != ''&& burstTime != 0 && priority != '') {
+    if (arrivalTime != '' && burstTime != '' && burstTime != 0 && priority != '') {
       incProcess++
     }
   }
@@ -173,15 +173,43 @@ function compute() {
   let stopRound = 0
   let startInc = 0
   let startRound = 0
+  let Firstms = 0
 
   while (completed < nOfprcs) {
     let highestPrioIndex = 0
     let holdPriority = 99999
     let holdArrival = 0
+    Firstms = 0;
+
+    if (currentTime == 0) {
+      for (let x = 0; x < nOfprcs; x++) {
+        if (
+          process[x].arrivalTime <= 0 &&
+          process[x].remainingBurstTime > 0 &&
+          process[x].priority < holdPriority
+        ) {
+          //to hold the current priority
+          holdPriority = process[x].priority
+          holdArrival = process[x].arrivalTime
+          //to hold the index of the highest priority
+          highestPrioIndex = x
+        } else if (
+          process[x].arrivalTime <= currentTime &&
+          process[x].remainingBurstTime > 0 &&
+          process[x].priority == holdPriority
+        ) {
+          if (process[x].arrivalTime < holdArrival) {
+            highestPrioIndex = x
+          }
+        }
+      }
+      Firstms += process[highestPrioIndex].arrivalTime
+      console.log("ms=0" + "P" + process[highestPrioIndex].Prcsname)
+    }
 
     for (let x = 0; x < nOfprcs; x++) {
       if (
-        process[x].arrivalTime <= currentTime &&
+        process[x].arrivalTime <= (currentTime+Firstms) &&
         process[x].remainingBurstTime > 0 &&
         process[x].priority < holdPriority
       ) {
@@ -191,7 +219,7 @@ function compute() {
         //to hold the index of the highest priority
         highestPrioIndex = x
       } else if (
-        process[x].arrivalTime <= currentTime &&
+        process[x].arrivalTime <=  (currentTime+Firstms) &&
         process[x].remainingBurstTime > 0 &&
         process[x].priority == holdPriority
       ) {
@@ -199,12 +227,12 @@ function compute() {
           highestPrioIndex = x
         }
       }
-      console.log('x=' + x)
     }
-
-    if(currentTime==0){
+    if(Firstms != 0){
       currentTime+=process[highestPrioIndex].arrivalTime
     }
+    
+
 
     //condition to collect the the data of stop time and start of the previous process
     if (highestPrioIndex != prevIndex && currentTime != 0) {
@@ -258,7 +286,7 @@ function compute() {
 
       //increments the time (equivalent to milisecond)
       currentTime++
-      
+
       ////decrements the burst time of the current process
       currentProcess.remainingBurstTime--
       //increments round of the current process
@@ -280,18 +308,18 @@ function compute() {
     prevIndex = highestPrioIndex
   }
 
-//checks if the burst times fits for gantt look
-let burstTime = 0
-let incArrive = 0
-for (let x = 0; x < nOfprcs; x++) {
-  burstTime += process[x].burstTime    
-}
-for (let x = 0; x < nOfprcs; x++) {
-  if(process[x].arrivalTime < burstTime){
-   incArrive++;   
+  //checks if the burst times fits for gantt look
+  let burstTime = 0
+  let incArrive = 0
+  for (let x = 0; x < nOfprcs; x++) {
+    burstTime += process[x].burstTime
   }
-}
-  if (incArrive ==  nOfprcs) {   
+  for (let x = 0; x < nOfprcs; x++) {
+    if (process[x].arrivalTime < burstTime) {
+      incArrive++;
+    }
+  }
+  if (incArrive == nOfprcs) {
     showDisplay()
   }
 }
@@ -313,51 +341,51 @@ function ganttChart() {
   ganttTitle.classList.add('content')
 
   let ganttendMsCell = document.createElement('div')
-  let prevGround=0
+  let prevGround = 0
   while (gantt[xq].Prcsname != null) {
-    let y=0;
-    console.log('ganttturn '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
+    let y = 0;
+    console.log('ganttturn ' + 'ms ' + xq + ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
     // Create cell for Gantt chart
     let ganttCell = document.createElement('div')
-    let ganttMsCell = document.createElement('div')   
+    let ganttMsCell = document.createElement('div')
     if (gantt[xq].Prcsname != prevGantt) {
-      if (gantt[xq].ganttRound == 0){
-      
+      if (gantt[xq].ganttRound == 0) {
+
         ganttMsCell.textContent = gantt[xq].startTime
         ganttMs.appendChild(ganttMsCell)
-        while (gantt[y].Prcsname != null){
-          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0){
-            gantt[y].ganttRound ++
+        while (gantt[y].Prcsname != null) {
+          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0) {
+            gantt[y].ganttRound++
           }
-          console.log('mainstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)            
+          console.log('mainstart ' + 'ms ' + xq + ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
           y++;
         }
       }
-      else{
+      else {
         prevGround = gantt[y].ganttRound
-        ganttMsCell.textContent = gantt[xq].nxtStartTime[gantt[xq].ganttRound-1]
+        ganttMsCell.textContent = gantt[xq].nxtStartTime[gantt[xq].ganttRound - 1]
         ganttMs.appendChild(ganttMsCell)
-        while (gantt[y].Prcsname != null){
-          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == prevGround){
-            
-            gantt[y].ganttRound ++
+        while (gantt[y].Prcsname != null) {
+          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == prevGround) {
+
+            gantt[y].ganttRound++
           }
-          console.log('nextstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
+          console.log('nextstart ' + 'ms ' + xq + ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)
           y++;
         }
-        console.log( 'P'+ gantt[xq].Prcsname+ ' next start time' + gantt[xq].nxtStartTime[0] + 'round ' + gantt[xq].ganttRound + ' ')
+        console.log('P' + gantt[xq].Prcsname + ' next start time' + gantt[xq].nxtStartTime[0] + 'round ' + gantt[xq].ganttRound + ' ')
       }
       ganttCell.textContent = 'P' + gantt[xq].Prcsname
-      
+
       ganttRow.appendChild(ganttCell)
       console.log('P' + gantt[xq].Prcsname)
       prevGantt = gantt[xq].Prcsname
     }
-    
+
     xq++
   }
   ganttendMsCell.textContent = endmsTime
-        ganttMs.appendChild(ganttendMsCell)
+  ganttMs.appendChild(ganttendMsCell)
   ganttRow.classList.add('ch')
 
   document.getElementById('chart-section').appendChild(ganttRow)
@@ -385,30 +413,30 @@ function toggleDarkMode() {
   document.body.classList.toggle('dark-mode')
 }
 
-function output() { 
+function output() {
 
-let outputHtml = ''
-let totalturnAroundTime = 0;
+  let outputHtml = ''
+  let totalturnAroundTime = 0;
 
-for (let x = 0; x < nOfprcs; x++) {
-  let y = 0
-  let turnAroundTime = process[x].endTime - process[x].arrivalTime
+  for (let x = 0; x < nOfprcs; x++) {
+    let y = 0
+    let turnAroundTime = process[x].endTime - process[x].arrivalTime
 
-  outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].endTime} - ${process[x].arrivalTime} = ${turnAroundTime}</p>`
+    outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].endTime} - ${process[x].arrivalTime} = ${turnAroundTime}</p>`
 
-  totalturnAroundTime += turnAroundTime
-}
+    totalturnAroundTime += turnAroundTime
+  }
 
-let averageturnAroundTime = totalturnAroundTime / nOfprcs
-let formattedAverageturnAroundTime = averageturnAroundTime.toFixed(1)
+  let averageturnAroundTime = totalturnAroundTime / nOfprcs
+  let formattedAverageturnAroundTime = averageturnAroundTime.toFixed(1)
 
-outputHtml += `<p id="totaltat"> TTAT = ${totalturnAroundTime} / ${nOfprcs}</p>`
-outputHtml += `<p id="atat" >ATAT = ${formattedAverageturnAroundTime}ms</p>`
+  outputHtml += `<p id="totaltat"> TTAT = ${totalturnAroundTime} / ${nOfprcs}</p>`
+  outputHtml += `<p id="atat" >ATAT = ${formattedAverageturnAroundTime}ms</p>`
 
-document.getElementById('TATout').innerHTML = outputHtml;
+  document.getElementById('TATout').innerHTML = outputHtml;
 
 
-outputHtml = ''
+  outputHtml = ''
   //WT---------------------------------------------------------------------
   let totalWaitingTime = 0
 
@@ -416,30 +444,30 @@ outputHtml = ''
     let y = 0
     let waitingTime = process[x].startTime - process[x].arrivalTime
 
-    
-    
-if  (process[x].nxtStartTime[0] != 0) {
 
-  outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;(${process[x].startTime} - ${process[x].arrivalTime}) + `;
-  
-  while (process[x].nxtStartTime[y] != 0) {
-    let nxtWaitingtime = process[x].nxtStartTime[y] - process[x].stopTime[y];
-    waitingTime += nxtWaitingtime;
-    if (process[x].nxtStartTime[y+1] != 0) {
 
-      outputHtml += `(${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) + `
+    if (process[x].nxtStartTime[0] != 0) {
 
+      outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;(${process[x].startTime} - ${process[x].arrivalTime}) + `;
+
+      while (process[x].nxtStartTime[y] != 0) {
+        let nxtWaitingtime = process[x].nxtStartTime[y] - process[x].stopTime[y];
+        waitingTime += nxtWaitingtime;
+        if (process[x].nxtStartTime[y + 1] != 0) {
+
+          outputHtml += `(${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) + `
+
+        }
+        else {
+          outputHtml += ` (${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) = ${waitingTime}</p>`
+        }
+        y++
+      }
     }
-    else{
-      outputHtml += ` (${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) = ${waitingTime}</p>`
-    } 
-    y++
-  }
-}
-else{
-  outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].startTime} - ${process[x].arrivalTime} = ${waitingTime}</p>`
-}
-    
+    else {
+      outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].startTime} - ${process[x].arrivalTime} = ${waitingTime}</p>`
+    }
+
 
     totalWaitingTime += waitingTime
   }
@@ -452,20 +480,20 @@ else{
   outputHtml += `<p id="awt"> AWT = ${formattedAverageWaitingTime}ms</p>`
 
   document.getElementById('TWTout').innerHTML = outputHtml;
-  
-//checks if the burst times fits for gantt look
-let burstTime = 0
+
+  //checks if the burst times fits for gantt look
+  let burstTime = 0
   for (let x = 0; x < nOfprcs; x++) {
-    burstTime += process[x].burstTime    
+    burstTime += process[x].burstTime
   }
-  
+
   const bdmsContainer = document.querySelector('#gantt-breakdown')
-  if (burstTime <101 ) { 
-    
+  if (burstTime < 101) {
+
     bdmsContainer.style.display = "flex"
     ganttBreakdown()
-  }else{
-    
+  } else {
+
     bdmsContainer.style.display = "none"
   }
 }
@@ -478,65 +506,65 @@ function showDisplay() {
 }
 
 
-function ganttBreakdown(){
+function ganttBreakdown() {
   let prevGantt = 0
   const prcsID = document.querySelector('#prcs-id')
   // Clear previous table content  
   gbd.innerHTML = ''
   prcsID.innerHTML = ''
   // Create row for Gantt chart
-  
+
   let xq = 0
 
   while (gantt[xq].Prcsname != null) {
-    let y =0
+    let y = 0
     let ganttBDRow = document.createElement('div')
     let ganttBDName = document.createElement('div')
-    if(gantt[xq].Prcsname != prevGantt && gantt[xq].BDRound==0){
-      
-        ganttBDName.textContent="P"+gantt[xq].Prcsname     
-      ganttBDRow.id= 'bd-prcs' + gantt[xq].Prcsname
+    if (gantt[xq].Prcsname != prevGantt && gantt[xq].BDRound == 0) {
+
+      ganttBDName.textContent = "P" + gantt[xq].Prcsname
+      ganttBDRow.id = 'bd-prcs' + gantt[xq].Prcsname
       ganttBDRow.style.marginLeft = gantt[xq].arrivalTime + "em"
-      ganttBDRow.style.width = (gantt[xq].endTime - gantt[xq].arrivalTime)+"em"
-        document.getElementById('prcs-content').appendChild(ganttBDRow);
-        document.getElementById('prcs-id').appendChild(ganttBDName)
-        while (gantt[y].Prcsname != null){
-          if (gantt[y].Prcsname === gantt[xq].Prcsname){            
-            gantt[y].BDRound++;            
-          }
-          console.log('current P'+gantt[xq].Prcsname)
-          console.log('BDloop '+'ms '+ xq+ ' P' + gantt[y].Prcsname + 'round ' + gantt[y].BDRound)     
-          y++;
+      ganttBDRow.style.width = (gantt[xq].endTime - gantt[xq].arrivalTime) + "em"
+      document.getElementById('prcs-content').appendChild(ganttBDRow);
+      document.getElementById('prcs-id').appendChild(ganttBDName)
+      while (gantt[y].Prcsname != null) {
+        if (gantt[y].Prcsname === gantt[xq].Prcsname) {
+          gantt[y].BDRound++;
         }
-     
-      
-     
-       
+        console.log('current P' + gantt[xq].Prcsname)
+        console.log('BDloop ' + 'ms ' + xq + ' P' + gantt[y].Prcsname + 'round ' + gantt[y].BDRound)
+        y++;
+      }
+
+
+
+
       prevGantt = gantt[xq].Prcsname
-    }  
+    }
 
     xq++
   }
   breakdownMS();
-  
+
 }
 
 
-function breakdownMS(){
-  let ms=1
+function breakdownMS() {
+  let ms = 1
   let msPrint = 0
 
   const divofms = document.querySelector('#bdms')
-  divofms.innerHTML = ''  
-  let msStartHead = document.createElement('div') 
+  divofms.innerHTML = ''
+  let msStartHead = document.createElement('div')
   msStartHead.textContent = 0
   msStartHead.id = 'aBdms' + 0
   document.getElementById('bdms').appendChild(msStartHead)
-  while(ms!=endmsTime-1){
-    let msHead = document.createElement('div')  
-   
-   
-    if ((ms%5)==0){
+  while (ms != endmsTime - 1) {
+    let msHead = document.createElement('div')
+
+
+    if ((ms % 5) == 0) {
       msPrint = ms
       msHead.textContent = ms
       msHead.id = 'aBdms' + ms
@@ -544,18 +572,18 @@ function breakdownMS(){
     }
     ms++
   }
-  let msEndHead = document.createElement('div') 
-  console.log(endmsTime -ms)
-  console.log(endmsTime -msPrint)
-  if ((endmsTime -msPrint)>4){
-    msEndHead.style.marginLeft =-56+(12*(endmsTime -msPrint)) + "px"
+  let msEndHead = document.createElement('div')
+  console.log(endmsTime - ms)
+  console.log(endmsTime - msPrint)
+  if ((endmsTime - msPrint) > 4) {
+    msEndHead.style.marginLeft = -56 + (12 * (endmsTime - msPrint)) + "px"
   }
-  else{
-    msEndHead.style.marginLeft =-66+(12*(endmsTime -msPrint)) + "px"
+  else {
+    msEndHead.style.marginLeft = -66 + (12 * (endmsTime - msPrint)) + "px"
   }
- 
+
   msEndHead.textContent = endmsTime
   msEndHead.id = 'aBdms' + ms
-      document.getElementById('bdms').appendChild(msEndHead)
+  document.getElementById('bdms').appendChild(msEndHead)
 
 }
