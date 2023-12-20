@@ -16,8 +16,6 @@
 .menu {
   width: 50px;
   height: 50px;
-  max-width: 3000px;
-  max-height: 1000px;
   position: fixed;
   top: 30px;
   right: 97px;
@@ -36,9 +34,32 @@
   z-index: 1;
 }
 
+/*
+.dark-mode .info{
+  top: 30px;
+} 
+.dark-mode .menu, .dark-mode .author{
+  position: fixed;
+}
 .dark-mode .menu {
   background-image: url('Assets/pictures/sun-2-svgrepo-com(1).png');
 }
+
+
+.dark-mode .ms-gantt > div,.dark-mode .ch > div,.dark-mode #gantt-chart,.dark-mode #solutions,.dark-mode  #prcsInput, .dark-mode #custom-container > section,.dark-mode  #output-container > section{
+  background-color: rgb(218, 213, 213);
+}
+
+.dark-mode .author{
+  position: fixed;
+  bottom: 40px;
+}
+
+.dark-mode{
+  filter: invert();
+  background-color: black;
+}*/
+
 
 .menu:hover {
   transform: scale(1.2);
@@ -57,11 +78,6 @@
   }
 }
 
-.dark-mode {
-  filter: invert(1);
-  background-color: #070100;
-}
-
 .author {
   position: fixed;
   bottom: 40px;
@@ -77,7 +93,6 @@
 }
 
 .menu::before {
-  content: '';
   position: fixed;
   top: 0;
   left: 0;
@@ -86,7 +101,6 @@
   opacity: 0;
   pointer-events: none;
   z-index: 1;
-  transition: opacity 2s ease;
 }
 
 .menu:active::before {
@@ -103,42 +117,35 @@
 }
 
 .info {
+  background-color: white;
+  background-image: url('Assets/pictures/about-us.png');
+  background-size: 45px;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 0;
   width: 50px;
   height: 50px;
-  max-width: 3000px;
-  max-height: 1000px;
+  max-height: 50px;
+  max-width: 400px;
   position: fixed;
   top: 30px;
   /* Adjust the top position to align with the top of #custom-container */
   right: 160px;
   color: black;
   border-radius: 35px;
-  background: #ffffff;
   box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
-
-  transition: width 0.5s ease-in-out;
   z-index: 1;
 }
 
 .info:hover {
-  width: 400px;
-}
-
-.icon {
-  width: 50px;
-  height: 50px;
-  position: fixed;
-  top: 30px;
-  /* Adjust the top position to align with the top of #custom-container */
-  right: 160px;
-  border-radius: 35px;
-  background: #ffffff00;
-
-  background-image: url('Assets/pictures/about-us.png');
-  background-size: 45px;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: width 0.5s ease-in-out;
+  background-position: center right;
+  text-wrap: nowrap;
+  width: 320px;
+  
+  font-size:small;
+ padding:  12px 20px;
+ padding-bottom: 0px;
+  text-align: center left;
 }
 
 body {
@@ -153,6 +160,7 @@ body {
 #title{
   display: block;
   text-align: center;
+  z-index: -1;
 }
 
 .title-container {
@@ -197,8 +205,8 @@ section{
 
 .titleprocess {
   margin-top: 10px;
-  font-size: 18px;
-  font-weight: 300;
+  font-size: 17px;
+  font-weight: 400;
 }
 
 .input-line {
@@ -232,7 +240,7 @@ section{
 }
 
 #table-container{
-  background-color: white;
+  background-color: white;  
   flex: 50%;
   width: 50px;
   max-width: 700px;
