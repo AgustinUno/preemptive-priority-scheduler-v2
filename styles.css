@@ -33,6 +33,7 @@
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.5s ease, filter 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1;
 }
 
 .dark-mode .menu {
@@ -116,6 +117,7 @@
   box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
 
   transition: width 0.5s ease-in-out;
+  z-index: 1;
 }
 
 .info:hover {
@@ -125,8 +127,6 @@
 .icon {
   width: 50px;
   height: 50px;
-  max-width: 3000px;
-  max-height: 1000px;
   position: fixed;
   top: 30px;
   /* Adjust the top position to align with the top of #custom-container */
@@ -135,7 +135,6 @@
   background: #ffffff00;
 
   background-image: url('Assets/pictures/about-us.png');
-  background-size: cover;
   background-size: 45px;
   background-repeat: no-repeat;
   background-position: center;
@@ -175,7 +174,7 @@ body {
   min-width: 500px;
   backdrop-filter: blur(100px);
   justify-content: center;
-  gap: 1em 3em;
+  gap: 1em 1em;
   flex-wrap: wrap;
 }
 
@@ -198,7 +197,7 @@ section{
 
 .titleprocess {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300;
 }
 
@@ -275,6 +274,8 @@ section{
 #cmpte {
   margin-top: 10px;
   font-family: "Inter";
+  font-weight: 600;
+  color: white;
   font-size: medium;
   padding: 10px;
   min-width: 70px;
@@ -287,6 +288,7 @@ section{
   display: flex;
   justify-content: center;
   gap: 1em;
+  flex-wrap: wrap;
 }
 
 
@@ -302,13 +304,15 @@ section{
 
 #gantTitle > .content{
   font-size: 30px;
-  font-weight: bolder;
+  font-weight: bold;
   text-align: center;
 }
 
 #gantTitle{
   display: flex;
   justify-content: center;
+  font-size: 30px;
+  font-weight: bolder;
 }
 
 
@@ -486,19 +490,26 @@ increbtn:active {
   }
 }
 
+#ganttnsol{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 #solutions {
   background-color: white;
-  height: 5%;
   min-width: 200;
   max-height: 1000px;
   min-height: 20px;
   gap: 2em;
+  display: flex;
 }
 
 #tatvert, #twtvert{
   display: flex;
   flex-direction: column;
   gap: 1em;
+  min-width: 180px;
 }
 
 #TAT-title, #TWT-title{
@@ -521,7 +532,7 @@ p{
 .ms-gantt{
   position: relative;
   display: flex;
-  gap: 2px;
+  gap: 4px;
   max-width: fit-content;
   padding: 0px 2px;
   left:-2px;
@@ -533,4 +544,91 @@ p{
   min-width: 18px;
   background-color: white;
   text-align: center;
+}
+
+#gantt-breakdown{
+  background-color: white;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+}
+
+#breakdown-section{
+  display: flex;
+  padding-top: 5px;
+}
+
+#prcs-content{
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  padding: 30px 15px;
+  background-color: rgb(235, 232, 232);
+  max-width: 100em;
+  min-width: 14em;
+}
+
+#prcs-id{
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top:18px;
+  padding-right: 1em;
+}
+
+#prcs-id > div{
+  font-weight: 600;
+}
+
+#prcs-content > div{ 
+  border-radius: 7px;
+  min-height: 2em;
+  min-width: 1em;
+  max-width: 100em;
+}
+
+#bd-prcs1{
+  background-color: rgb(255, 191, 31);
+  
+} 
+#bd-prcs2{
+  background-color: rgb(241, 11, 241);
+}
+
+#bd-prcs3{
+  background-color: rgb(60, 233, 38);
+}
+#bd-prcs4{
+  background-color: rgb(252, 148, 13);
+}
+#bd-prcs5{
+  background-color: rgb(38, 194, 233);
+}
+
+#bd-prcs6{
+  background-color: rgb(233, 230, 38);
+}
+
+#bd-prcs7{
+  background-color: rgb(85, 101, 252);
+}
+
+#bd-prcs8{
+  background-color: rgb(248, 66, 172);
+}
+
+#bdms{  
+  font-weight: 300;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+  margin-left: 90px;
+}
+
+#bdms>div{  
+  margin-right: 64px;
+}
+
+#aBdms25,#aBdms35,#aBdms45,#aBdms55,#aBdms65,#aBdms75,#aBdms85,#aBdms95,#aBdms105{
+  margin-right: 57px!important;
 }

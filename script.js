@@ -6,8 +6,9 @@ var prcsHold = document.getElementById('prcsInput').value
 //decrements the input value
 const chart = document.querySelector('#chart-section')
 const gtitle = document.querySelector('#gantTitle')
-var showGantt = document.getElementById("gantt-chart");
-var showSolutions = document.getElementById("solutions");
+const gbd = document.querySelector('#prcs-content')
+
+var showOutput = document.getElementById("output-container");
 
 
 //global declarations
@@ -43,8 +44,7 @@ function increment() {
 //selects the input as number of process
 function confirm() {
   nOfprcs = prcsHold
-  showGantt.style.display = 'none'
-  showSolutions.style.display = 'none'
+  showOutput.style.display = 'none'
   createTable()
 }
 
@@ -154,8 +154,7 @@ input4.addEventListener('input', function(event) {
 }
 
 function fetch() {
-  showGantt.style.display = 'none'
-  showSolutions.style.display = 'none'
+  showOutput.style.display = 'none'
 
 
   let incProcess = 0
@@ -168,7 +167,7 @@ function fetch() {
     let burstTime = document.getElementById('brsTime' + (x + 1)).value
     let priority = document.getElementById('prio' + (x + 1)).value
 
-    if (arrivalTime != '' && burstTime != '' && priority != '') {
+    if (arrivalTime != '' && burstTime != ''&& burstTime != 0 && priority != '') {
       incProcess++
     }
   }
@@ -186,7 +185,8 @@ function fetch() {
         round: 0,
         stopTime: [0],
         nxtStartTime: [0],
-        ganttRound: 0
+        ganttRound: 0,
+        BDRound: 0
       })
     }
 
@@ -334,8 +334,6 @@ function compute() {
 }
 
 function ganttChart() {
-
-
   let prevGantt = 0
   // Clear previous table content
   chart.innerHTML = ''
@@ -427,9 +425,7 @@ function toggleDarkMode() {
   document.body.classList.toggle('dark-mode')
 }
 
-function output() {
-
-  
+function output() { 
 
 let outputHtml = ''
 let totalturnAroundTime = 0;
@@ -496,14 +492,110 @@ else{
   outputHtml += `<p id="awt"> AWT = ${formattedAverageWaitingTime}ms</p>`
 
   document.getElementById('TWTout').innerHTML = outputHtml;
-
+  
+//checks if the burst times fits for gantt look
+let burstTime = 0
+  for (let x = 0; x < nOfprcs; x++) {
+    burstTime += process[x].burstTime    
+  }
+  
+  const bdmsContainer = document.querySelector('#gantt-breakdown')
+  if (burstTime <101 ) { 
+    
+    bdmsContainer.style.display = "flex"
+    ganttBreakdown()
+  }else{
+    
+    bdmsContainer.style.display = "none"
+  }
 }
 
 function showDisplay() {
   var displayValue = "flex";
 
-  showGantt.style.display = displayValue;
-  showSolutions.style.display = displayValue;
+  showOutput.style.display = displayValue;
   printPrcssTimes()
 }
 
+
+function ganttBreakdown(){
+  let prevGantt = 0
+  const prcsID = document.querySelector('#prcs-id')
+  // Clear previous table content  
+  gbd.innerHTML = ''
+  prcsID.innerHTML = ''
+  // Create row for Gantt chart
+  
+  let xq = 0
+
+  while (gantt[xq].Prcsname != null) {
+    let y =0
+    let ganttBDRow = document.createElement('div')
+    let ganttBDName = document.createElement('div')
+    if(gantt[xq].Prcsname != prevGantt && gantt[xq].BDRound==0){
+      
+        ganttBDName.textContent="P"+gantt[xq].Prcsname     
+      ganttBDRow.id= 'bd-prcs' + gantt[xq].Prcsname
+      ganttBDRow.style.marginLeft = gantt[xq].arrivalTime + "em"
+      ganttBDRow.style.width = (gantt[xq].endTime - gantt[xq].arrivalTime)+"em"
+        document.getElementById('prcs-content').appendChild(ganttBDRow);
+        document.getElementById('prcs-id').appendChild(ganttBDName)
+        while (gantt[y].Prcsname != null){
+          if (gantt[y].Prcsname === gantt[xq].Prcsname){            
+            gantt[y].BDRound++;            
+          }
+          console.log('current P'+gantt[xq].Prcsname)
+          console.log('BDloop '+'ms '+ xq+ ' P' + gantt[y].Prcsname + 'round ' + gantt[y].BDRound)     
+          y++;
+        }
+     
+      
+     
+       
+      prevGantt = gantt[xq].Prcsname
+    }  
+
+    xq++
+  }
+  breakdownMS();
+  
+}
+
+
+function breakdownMS(){
+  let ms=1
+  let msPrint = 0
+
+  const divofms = document.querySelector('#bdms')
+  divofms.innerHTML = ''  
+  let msStartHead = document.createElement('div') 
+  msStartHead.textContent = 0
+  msStartHead.id = 'aBdms' + 0
+  document.getElementById('bdms').appendChild(msStartHead)
+  while(ms!=endmsTime-1){
+    let msHead = document.createElement('div')  
+   
+   
+    if ((ms%5)==0){
+      msPrint = ms
+      msHead.textContent = ms
+      msHead.id = 'aBdms' + ms
+      document.getElementById('bdms').appendChild(msHead)
+    }
+    ms++
+  }
+  let msEndHead = document.createElement('div') 
+  console.log(endmsTime -ms)
+  console.log(endmsTime -msPrint)
+  if ((endmsTime -msPrint)>4){
+    msEndHead.style.marginLeft =-56+(12*(endmsTime -msPrint)) + "px"
+  }
+  else{
+    msEndHead.style.marginLeft =-66+(12*(endmsTime -msPrint)) + "px"
+  }
+ 
+  msEndHead.textContent = endmsTime
+  msEndHead.id = 'aBdms' + ms
+      document.getElementById('bdms').appendChild(msEndHead)
+
+}
