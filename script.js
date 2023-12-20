@@ -298,8 +298,21 @@ function compute() {
     //holds the previous index
     prevIndex = highestPrioIndex
   }
-  showDisplay()
 
+//checks if the burst times fits for gantt look
+let burstTime = 0
+let incArrive = 0
+for (let x = 0; x < nOfprcs; x++) {
+  burstTime += process[x].burstTime    
+}
+for (let x = 0; x < nOfprcs; x++) {
+  if(process[x].arrivalTime < burstTime){
+   incArrive++;   
+  }
+}
+  if (incArrive ==  nOfprcs) {   
+    showDisplay()
+  }
 }
 
 function ganttChart() {
@@ -384,6 +397,10 @@ function printPrcssTimes() {
     }
     console.log('\t\t' + process[x].endTime)
   }
+
+
+
+
 
 
   ganttChart()
