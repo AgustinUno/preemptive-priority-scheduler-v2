@@ -86,46 +86,15 @@ function createTable() {
     input4 = document.createElement('input')
 
     // Set input attributes
-    // input2.type = 'number'
-    // input2.id = 'arTime' + (x + 1)
-    // input2.value = ''
-    // input3.type = 'number'
-    // input3.id = 'brsTime' + (x + 1)
-    // input3.value = ''
-    // input4.type = 'number'
-    // input4.id = 'prio' + (x + 1)
-    // input4.value = ''
-    // Set input attributes
-input2.type = 'text'; // Use text type instead of number
-input2.id = 'arTime' + (x + 1);
-input2.value = '';
-
-// Add event listener to allow only numeric input
-input2.addEventListener('input', function(event) {
-    // Remove non-numeric characters using a regular expression
-    event.target.value = event.target.value.replace(/\D/g, '');
-});
-
-input3.type = 'text'; // Use text type instead of number
-input3.id = 'brsTime' + (x + 1);
-input3.value = '';
-
-// Add event listener to allow only numeric input
-input3.addEventListener('input', function(event) {
-    // Remove non-numeric characters using a regular expression
-    event.target.value = event.target.value.replace(/\D/g, '');
-});
-
-input4.type = 'text'; // Use text type instead of number
-input4.id = 'prio' + (x + 1);
-input4.value = '';
-
-// Add event listener to allow only numeric input
-input4.addEventListener('input', function(event) {
-    // Remove non-numeric characters using a regular expression
-    event.target.value = event.target.value.replace(/\D/g, '');
-});
-
+    input2.type = 'number'
+    input2.id = 'arTime' + (x + 1)
+    input2.value = ''
+    input3.type = 'number'
+    input3.id = 'brsTime' + (x + 1)
+    input3.value = ''
+    input4.type = 'number'
+    input4.id = 'prio' + (x + 1)
+    input4.value = ''
 
     // Set input placeholders
 
@@ -233,27 +202,8 @@ function compute() {
       console.log('x=' + x)
     }
 
-    //checking if process arrived in time, finding the highest priority
-    for (let i = 0; i < nOfprcs; i++) {
-      if (
-        process[i].arrivalTime <= currentTime &&
-        process[i].remainingBurstTime > 0 &&
-        process[i].priority < holdPriority
-      ) {
-        //to hold the current priority
-        holdPriority = process[i].priority
-        holdArrival = process[i].arrivalTime
-        //to hold the index of the highest priority
-        highestPrioIndex = i
-      } else if (
-        process[i].arrivalTime <= currentTime &&
-        process[i].remainingBurstTime > 0 &&
-        process[i].priority == holdPriority
-      ) {
-        if (process[i].arrivalTime < holdArrival) {
-          highestPrioIndex = i
-        }
-      }
+    if(currentTime==0){
+      currentTime+=process[highestPrioIndex].arrivalTime
     }
 
     //condition to collect the the data of stop time and start of the previous process
@@ -329,8 +279,21 @@ function compute() {
     //holds the previous index
     prevIndex = highestPrioIndex
   }
-  showDisplay()
 
+//checks if the burst times fits for gantt look
+let burstTime = 0
+let incArrive = 0
+for (let x = 0; x < nOfprcs; x++) {
+  burstTime += process[x].burstTime    
+}
+for (let x = 0; x < nOfprcs; x++) {
+  if(process[x].arrivalTime < burstTime){
+   incArrive++;   
+  }
+}
+  if (incArrive ==  nOfprcs) {   
+    showDisplay()
+  }
 }
 
 function ganttChart() {
@@ -359,17 +322,16 @@ function ganttChart() {
     let ganttMsCell = document.createElement('div')   
     if (gantt[xq].Prcsname != prevGantt) {
       if (gantt[xq].ganttRound == 0){
+      
         ganttMsCell.textContent = gantt[xq].startTime
         ganttMs.appendChild(ganttMsCell)
         while (gantt[y].Prcsname != null){
           if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0){
             gantt[y].ganttRound ++
-            
           }
           console.log('mainstart '+'ms '+ xq+ ' P' + gantt[xq].Prcsname + 'round ' + gantt[xq].ganttRound)            
           y++;
         }
-      
       }
       else{
         prevGround = gantt[y].ganttRound
@@ -415,8 +377,6 @@ function printPrcssTimes() {
     }
     console.log('\t\t' + process[x].endTime)
   }
-
-
   ganttChart()
 
 }
