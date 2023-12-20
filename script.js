@@ -9,7 +9,6 @@ let process = [
 ]
 let gantt = []
 let endmsTime = 0;
-let AllBurstTimes = 0
 
 //declarations for the clearing of the elements
 var prcsHold = document.getElementById('prcsInput').value
@@ -315,8 +314,9 @@ function compute() {
   }
 
   //section that checks if the arrival times fits for the total of burst times
-  let incArrive = 0
-  //
+  let incArrive = 0  
+let AllBurstTimes = 0
+  //increments all the burst times
   for (let x = 0; x < nOfprcs; x++) {
     AllBurstTimes += process[x].burstTime
   }
@@ -558,6 +558,12 @@ function output() {
   //checks if the burst times fits for gantt look
 
   const bdmsContainer = document.querySelector('#gantt-breakdown')
+
+  //increments all the burst times
+  let AllBurstTimes = 0
+  for(let x=0; x<nOfprcs; x++){
+    AllBurstTimes+=process[x].burstTime
+  }
   if (AllBurstTimes < 101) {
     bdmsContainer.style.display = "flex"
     ganttBreakdown()
@@ -571,6 +577,8 @@ function ganttBreakdown() {
   let prevGantt = 0
   let xq = 0
   // Clear previous table content  
+  const prcsID = document.querySelector('#prcs-id')
+  prcsID.innerHTML = ''
   gbd.innerHTML = ''
 
   //loop to show all the process in gantt chart
@@ -595,7 +603,7 @@ function ganttBreakdown() {
       //loop to show all the process in gantt chart
       while (gantt[y].Prcsname != null) {
         //condition to increment the round of current process
-        if (gantt[y].Prcsname === gantt[xq].Prcsname) {
+        if (gantt[y].Prcsname === gantt[xq].Prcsname && gantt[xq].BDRound == 0) {
           //increment round
           gantt[y].BDRound++;
         }
