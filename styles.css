@@ -34,7 +34,7 @@
   z-index: 1;
 }
 
-/*
+
 .dark-mode .info{
   top: 30px;
 } 
@@ -58,7 +58,7 @@
 .dark-mode{
   filter: invert();
   background-color: black;
-}*/
+}
 
 
 .menu:hover {
