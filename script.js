@@ -462,7 +462,27 @@ else{
 
   document.getElementById('TWTout').innerHTML = outputHtml;
 
-  ganttBreakdown()
+
+
+
+
+
+  
+//
+let burstTime = 0
+  for (let x = 0; x < nOfprcs; x++) {
+    burstTime += process[x].burstTime    
+  }
+  
+  const bdmsContainer = document.querySelector('#gantt-breakdown')
+  if (burstTime <101 ) { 
+    
+    bdmsContainer.style.display = "flex"
+    ganttBreakdown()
+  }else{
+    
+    bdmsContainer.style.display = "none"
+  }
 }
 
 function showDisplay() {
