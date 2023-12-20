@@ -33,6 +33,7 @@
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.5s ease, filter 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1;
 }
 
 .dark-mode .menu {
@@ -116,6 +117,7 @@
   box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
 
   transition: width 0.5s ease-in-out;
+  z-index: 1;
 }
 
 .info:hover {
@@ -125,8 +127,6 @@
 .icon {
   width: 50px;
   height: 50px;
-  max-width: 3000px;
-  max-height: 1000px;
   position: fixed;
   top: 30px;
   /* Adjust the top position to align with the top of #custom-container */
@@ -135,7 +135,6 @@
   background: #ffffff00;
 
   background-image: url('Assets/pictures/about-us.png');
-  background-size: cover;
   background-size: 45px;
   background-repeat: no-repeat;
   background-position: center;

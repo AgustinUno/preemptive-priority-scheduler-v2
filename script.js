@@ -461,14 +461,8 @@ else{
   outputHtml += `<p id="awt"> AWT = ${formattedAverageWaitingTime}ms</p>`
 
   document.getElementById('TWTout').innerHTML = outputHtml;
-
-
-
-
-
-
   
-//
+//checks if the burst times fits for gantt look
 let burstTime = 0
   for (let x = 0; x < nOfprcs; x++) {
     burstTime += process[x].burstTime    
