@@ -86,15 +86,46 @@ function createTable() {
     input4 = document.createElement('input')
 
     // Set input attributes
-    input2.type = 'number'
-    input2.id = 'arTime' + (x + 1)
-    input2.value = ''
-    input3.type = 'number'
-    input3.id = 'brsTime' + (x + 1)
-    input3.value = ''
-    input4.type = 'number'
-    input4.id = 'prio' + (x + 1)
-    input4.value = ''
+    // input2.type = 'number'
+    // input2.id = 'arTime' + (x + 1)
+    // input2.value = ''
+    // input3.type = 'number'
+    // input3.id = 'brsTime' + (x + 1)
+    // input3.value = ''
+    // input4.type = 'number'
+    // input4.id = 'prio' + (x + 1)
+    // input4.value = ''
+    // Set input attributes
+input2.type = 'text'; // Use text type instead of number
+input2.id = 'arTime' + (x + 1);
+input2.value = '';
+
+// Add event listener to allow only numeric input
+input2.addEventListener('input', function(event) {
+    // Remove non-numeric characters using a regular expression
+    event.target.value = event.target.value.replace(/\D/g, '');
+});
+
+input3.type = 'text'; // Use text type instead of number
+input3.id = 'brsTime' + (x + 1);
+input3.value = '';
+
+// Add event listener to allow only numeric input
+input3.addEventListener('input', function(event) {
+    // Remove non-numeric characters using a regular expression
+    event.target.value = event.target.value.replace(/\D/g, '');
+});
+
+input4.type = 'text'; // Use text type instead of number
+input4.id = 'prio' + (x + 1);
+input4.value = '';
+
+// Add event listener to allow only numeric input
+input4.addEventListener('input', function(event) {
+    // Remove non-numeric characters using a regular expression
+    event.target.value = event.target.value.replace(/\D/g, '');
+});
+
 
     // Set input placeholders
 
