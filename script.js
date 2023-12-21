@@ -262,6 +262,10 @@ function compute() {
         //declares next index of start time as zero for while loops
         process[highestPrioIndex].nxtStartTime[startRound + 1] = 0
         //incrementation for the round of all the process
+      }
+
+      //increments for the round of the process
+      if (process[highestPrioIndex].remainingBurstTime != 0){
         startInc++
       }
     }
