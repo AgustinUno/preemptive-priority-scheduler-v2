@@ -9,6 +9,7 @@ let process = [
 ]
 let gantt = []
 let endmsTime = 0;
+let showIt = 0
 
 //declarations for the clearing of the elements
 var prcsHold = document.getElementById('prcsInput').value
@@ -16,7 +17,7 @@ const chart = document.querySelector('#chart-section')
 const gtitle = document.querySelector('#gantTitle')
 const gbd = document.querySelector('#prcs-content')
 var showOutput = document.getElementById("output-container");
-
+const comgbd = document.querySelector('#compressed')
 //function call to create the table of inputs
 createTable()
 
@@ -123,11 +124,29 @@ function createTable() {
 }
 
 function fetch() {
+  showIt = 0
+  let comleg = document.querySelector('#com-legend')
+  comleg.innerHTML = ''
+  for (let i = 0; i < nOfprcs; i++) {
+    let comlegend = document.createElement('div')
+    comlegend.id = 'bd-prcs' + (i + 1)
+    comlegend.textContent = "P" + (i + 1)
+    document.getElementById('com-legend').appendChild(comlegend)
+  }
+  var showLegend = document.getElementById("com-legend");
+  showLegend.style.display = 'flex'
+  // Clear previous table content  
+  comgbd.innerHTML = ''
+  //clears previous table content
+  chart.innerHTML = ''
+  gtitle.innerHTML = ''
   //increment for confirmation of proper values
+  var hideBreakdown = document.getElementById("compressed");
+  hideBreakdown.style.display = 'flex'
   let incProcess = 0
   //receives the given
   process = [] //resets array every compute
-
+  document.getElementById('gant-mode').textContent = 'expand'
   //checks if the inputs have the proper values
   for (let x = 0; x < nOfprcs; x++) {
     let arrivalTime = document.getElementById('arTime' + (x + 1)).value
@@ -138,7 +157,7 @@ function fetch() {
       incProcess++
     }
   }
-
+  document.getElementById("output-container").style.display = 'none';
   //condition if all the inputs are valid, and also sets the future values
   if (incProcess == nOfprcs) {
     for (let x = 0; x < nOfprcs; x++) {
@@ -159,7 +178,8 @@ function fetch() {
         ganttRound: 0,
         BDRound: 0,
         nxtStartRound: 0,
-        nxtStopRound: 0
+        nxtStopRound: 0,
+        comRound: 0
       })
     }
     //function call to compute
@@ -233,26 +253,26 @@ function compute() {
 
     //condition to collect the data of stop time and start of the previous process
     if (highestPrioIndex != prevIndex && currentTime != 0) {
-      let x = 0      
+      let x = 0
 
       //loop for fetching the stop time of the previous process
       if (process[prevIndex].remainingBurstTime != 0) {
         //fetches the stop time of the previous process
         process[prevIndex].stopTime[process[prevIndex].nxtStopRound] = currentTime
         //declares next index  of stop time as zero for while loops
-        process[prevIndex].stopTime[process[prevIndex].nxtStopRound+1] = 0
+        process[prevIndex].stopTime[process[prevIndex].nxtStopRound + 1] = 0
         //increments the index of stop time
         process[prevIndex].nxtStopRound++
-      }      
+      }
       //condition for the next start time if the current process had previously arrived
       if (process[highestPrioIndex].round != 0) {
         //fetches the the next starting time of the current process
         process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound] = currentTime
         //declares next index of start time as zero for while loops
-        process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound+1] = 0
+        process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound + 1] = 0
         //increments the index of stop time
         process[highestPrioIndex].nxtStartRound++
-      }      
+      }
     }
 
     //condition if the process is found
@@ -303,8 +323,8 @@ function compute() {
   }
 
   //section that checks if the arrival times fits for the total of burst times
-  let incArrive = 0  
-let AllBurstTimes = 0
+  let incArrive = 0
+  let AllBurstTimes = 0
   //increments all the burst times
   for (let x = 0; x < nOfprcs; x++) {
     AllBurstTimes += process[x].burstTime
@@ -362,9 +382,6 @@ function ganttChart() {
   let prevGround = 0
   let xq = 0
 
-  //clears previous table content
-  chart.innerHTML = ''
-  gtitle.innerHTML = ''
 
   // Creates rows for Gantt chart
   let ganttRow = document.createElement('div')
@@ -422,6 +439,7 @@ function ganttChart() {
           y++;
         }
       }
+
       //prints the name of the process into the gantt chart
       ganttCell.textContent = 'P' + gantt[xq].Prcsname
       //creates the cell into html
@@ -449,7 +467,7 @@ function ganttChart() {
 }
 
 function output() {
-  let outputHtml = '' 
+  let outputHtml = ''
 
   //sorting the process by name
   for (let x = 0; x < nOfprcs; x++) {
@@ -501,7 +519,7 @@ function output() {
 
     //condition if the next start have value
     if (process[x].nxtStartTime[0] != 0) {
-       //prints the computations into html
+      //prints the computations into html
       outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;(${process[x].startTime} - ${process[x].arrivalTime}) + `;
 
       //loop for computing the extra start times and stop times
@@ -531,17 +549,17 @@ function output() {
     //increments the values of the wt to create total
     totalWaitingTime += waitingTime
   }
-  
+
   //formula for the average of waiting time
   let averageWaitingTime = totalWaitingTime / nOfprcs
   //sets the decimal points into 1
   let formattedAverageWaitingTime = averageWaitingTime.toFixed(1);
 
-//prints the computation into html
+  //prints the computation into html
   outputHtml += `<p id="totalwt">TWT = ${totalWaitingTime} / ${nOfprcs}</p>`
   outputHtml += `<p id="awt"> AWT = ${formattedAverageWaitingTime}ms</p>`
 
-   //outputs the section into html
+  //outputs the section into html
   document.getElementById('TWTout').innerHTML = outputHtml;
 
   //checks if the burst times fits for gantt look
@@ -550,21 +568,120 @@ function output() {
 
   //increments all the burst times
   let AllBurstTimes = 0
-  for(let x=0; x<nOfprcs; x++){
-    AllBurstTimes+=process[x].burstTime
+  for (let x = 0; x < nOfprcs; x++) {
+    AllBurstTimes += process[x].burstTime
   }
   if (AllBurstTimes < 101) {
     bdmsContainer.style.display = "flex"
-    ganttBreakdown()
+    compressedGantt()
   } else {
     bdmsContainer.style.display = "none"
   }
 }
 
 //function for gantt chart breakdown
+function compressedGantt() {
+  var showBreakdown = document.getElementById("breakdown-section");
+  showBreakdown.style.display = 'none'
+
+  let prevGantt = 0
+  let xq = 0
+
+  document.getElementById("bdms").style.marginLeft = "55px"
+
+  //loop to show all the process in gantt chart
+  while (gantt[xq].Prcsname != null) {
+    let y = 0
+    // Create cells for Gantt chart
+    let ganttBDRow = document.createElement('div')
+
+    //sets the process id
+    ganttBDRow.id = 'bd-prcs' + gantt[xq].Prcsname
+    console.log("current p"+gantt[xq].Prcsname)
+    //set the width equal to turn around time
+    if (gantt[xq].stopTime[0] != 0) {
+      if (gantt[xq].comRound == 0) {
+        let width = gantt[xq].stopTime[0] - gantt[xq].arrivalTime
+        console.log("comround==0 width = "+width)
+        //set the margin equal to arrival time
+        ganttBDRow.style.marginLeft = gantt[xq].arrivalTime + "em"
+        ganttBDRow.style.width = width + "em"
+        document.getElementById('compressed').appendChild(ganttBDRow);
+        while (gantt[y].Prcsname != null) {
+          //condition to increment the round of current process
+          if (gantt[y].Prcsname === gantt[xq].Prcsname && gantt[y].comRound == 0) {
+            //increment round
+            gantt[y].comRound++;
+            //holds highest round
+            highComround = gantt[y].comRound
+          }
+          y++;
+        }
+      }
+      else {
+        if (gantt[xq].stopTime[gantt[xq].comRound] != 0) {
+          let width =gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStartTime[gantt[xq].comRound - 1]
+          console.log("comround!=0 width and still has next index= "+width)
+          prevComround = gantt[xq].comRound
+          ganttBDRow.style.marginLeft = gantt[xq].nxtStartTime[gantt[xq].comRound - 1] + "em"
+          ganttBDRow.style.width =  width + "em"
+          document.getElementById('compressed').appendChild(ganttBDRow);
+
+          
+          //loop to show all the process in gantt chart
+          while (gantt[y].Prcsname != null) {
+            //condition to increment the round of current process
+            if (gantt[y].Prcsname === gantt[xq].Prcsname && gantt[y].comRound == prevComround) {
+              //increment round
+              gantt[y].comRound++;
+              //holds highest round
+              highComround = gantt[y].comRound
+            }
+            y++;
+          }
+        }
+        else {
+          
+          let width =(gantt[xq].endTime - gantt[xq].nxtStartTime[gantt[xq].comRound - 1])
+          console.log("comround!=0  and no next index width= "+width) 
+          ganttBDRow.style.marginLeft = gantt[xq].nxtStartTime[gantt[xq].comRound - 1] + "em"
+          ganttBDRow.style.width = width + "em"
+          document.getElementById('compressed').appendChild(ganttBDRow);
+        }
+      }
+    } else {
+      let width = gantt[xq].endTime - gantt[xq].startTime
+      console.log("no stoptime and no next index width= "+width)
+      //set the margin equal to arrival time
+      ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
+      ganttBDRow.style.width = width + "em"
+      document.getElementById('compressed').appendChild(ganttBDRow);
+    }
+
+
+    //sets z-index
+    ganttBDRow.style.zIndex = xq
+    //creates the cells into html
+
+    //holds the name of the process for comparing
+    prevGantt = gantt[xq].Prcsname
+
+
+
+    //incrementtation for the loop
+    xq++
+  }
+  document.getElementById('compressed').style.width = endmsTime + 'em'
+
+
+  ganttBreakdown()
+}
+
+//function for gantt chart breakdown
 function ganttBreakdown() {
   let prevGantt = 0
   let xq = 0
+
   // Clear previous table content  
   const prcsID = document.querySelector('#prcs-id')
   prcsID.innerHTML = ''
@@ -580,8 +697,10 @@ function ganttBreakdown() {
     if (gantt[xq].Prcsname != prevGantt && gantt[xq].BDRound == 0) {
       //prints the process name
       ganttBDName.textContent = "P" + gantt[xq].Prcsname
+
       //sets the process id
       ganttBDRow.id = 'bd-prcs' + gantt[xq].Prcsname
+
       //set the margin equal to arrival time
       ganttBDRow.style.marginLeft = gantt[xq].arrivalTime + "em"
       //set the width equal to turn around time
@@ -589,6 +708,7 @@ function ganttBreakdown() {
       //creates the cells into html
       document.getElementById('prcs-content').appendChild(ganttBDRow);
       document.getElementById('prcs-id').appendChild(ganttBDName)
+
       //loop to show all the process in gantt chart
       while (gantt[y].Prcsname != null) {
         //condition to increment the round of current process
@@ -608,16 +728,13 @@ function ganttBreakdown() {
   breakdownMS();
 }
 
-
-
-
 function breakdownMS() {
   let ms = 1
   let msPrint = 0
   const divofms = document.querySelector('#bdms')
   //clears previous milliseconds
   divofms.innerHTML = ''
-  //setting the starting time the breakdown
+  //setting the starting time of the breakdown
   //declare cell for html
   let msStartHead = document.createElement('div')
   //prints the millisecond zero
@@ -638,7 +755,7 @@ function breakdownMS() {
       msHead.textContent = ms
       //sets the id of the cell
       msHead.id = 'aBdms' + ms
-       //creates the cell into the html
+      //creates the cell into the html
       document.getElementById('bdms').appendChild(msHead)
     }
     //incrementation of the loop
@@ -665,25 +782,33 @@ function breakdownMS() {
 
 }
 
+
+
 //function for night mode
 function toggleDarkMode() {
   //toggles the class dark mode
   document.body.classList.toggle('dark-mode')
 }
 
+function showGanttBD() {
+  var showBreakdown = document.getElementById("breakdown-section");
+  var hideBreakdown = document.getElementById("compressed");
+  var showLegend = document.getElementById("com-legend");
+  if (showIt == 0) {
+    document.getElementById("bdms").style.marginLeft = "90px"
+    showBreakdown.style.display = 'flex'
+    hideBreakdown.style.display = 'none'
+    showLegend.style.display = 'none'
+    document.getElementById('gant-mode').textContent = 'shrink'
+    showIt = 1
+  }
+  else {
+    document.getElementById("bdms").style.marginLeft = "55px"
+    showBreakdown.style.display = 'none'
+    hideBreakdown.style.display = 'flex'
+    showLegend.style.display = 'flex'
+    showIt = 0
+    document.getElementById('gant-mode').textContent = 'expand'
+  }
 
-let popInfo = document.getElementById("info-popup");
-
-function openInfo() {
-    popInfo.classList.add("open-info");
 }
-
-function closeInfo() {
-    popInfo.classList.remove("open-info");
-    console.log("removed!");
-
-}
-
-
-
-
