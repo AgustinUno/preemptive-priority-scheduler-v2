@@ -670,3 +670,20 @@ function toggleDarkMode() {
   //toggles the class dark mode
   document.body.classList.toggle('dark-mode')
 }
+
+
+let popInfo = document.getElementById("info-popup");
+
+function openInfo() {
+    popInfo.classList.add("open-info");
+}
+
+function closeInfo() {
+    popInfo.classList.remove("open-info");
+    console.log("removed!");
+
+}
+
+
+
+
