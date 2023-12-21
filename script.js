@@ -157,7 +157,9 @@ function fetch() {
         stopTime: [0],
         nxtStartTime: [0],
         ganttRound: 0,
-        BDRound: 0
+        BDRound: 0,
+        nxtStartRound: 0,
+        nxtStopRound: 0
       })
     }
     //function call to compute
@@ -171,10 +173,7 @@ function compute() {
   let completed = 0
   let currentTime = 0
   let prevIndex = 0
-  let stopInc = 0
   let stopRound = 0
-  let startInc = 0
-  let startRound = 0
 
   //loop until all the process is finished
   while (completed < nOfprcs) {
@@ -234,40 +233,26 @@ function compute() {
 
     //condition to collect the data of stop time and start of the previous process
     if (highestPrioIndex != prevIndex && currentTime != 0) {
-      let x = 0
-      //to increment the index of stop time for each process
-      if (stopInc == nOfprcs - 1) {
-        stopRound++
-      }
-      //to increment the index of start time for each process
-      if (startInc == nOfprcs - 1) {
-        startRound++
-      }
+      let x = 0      
 
       //loop for fetching the stop time of the previous process
-      while (process[prevIndex].stopTime[stopRound] == 0) {
-        process[prevIndex].stopTime[stopRound] = currentTime
+      if (process[prevIndex].remainingBurstTime != 0) {
+        //fetches the stop time of the previous process
+        process[prevIndex].stopTime[process[prevIndex].nxtStopRound] = currentTime
         //declares next index  of stop time as zero for while loops
-        process[prevIndex].stopTime[stopRound + 1] = 0
-        console.log('bt =' + process[prevIndex].remainingBurstTime)
-        console.log('stop time =' + process[prevIndex].stopTime[stopRound])
-        //incrementation for the round of all the process
-        stopInc++
-      }
-
+        process[prevIndex].stopTime[process[prevIndex].nxtStopRound+1] = 0
+        //increments the index of stop time
+        process[prevIndex].nxtStopRound++
+      }      
       //condition for the next start time if the current process had previously arrived
       if (process[highestPrioIndex].round != 0) {
         //fetches the the next starting time of the current process
-        process[highestPrioIndex].nxtStartTime[startRound] = currentTime
+        process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound] = currentTime
         //declares next index of start time as zero for while loops
-        process[highestPrioIndex].nxtStartTime[startRound + 1] = 0
-        //incrementation for the round of all the process
-      }
-
-      //increments for the round of the process
-      if (process[highestPrioIndex].remainingBurstTime != 0){
-        startInc++
-      }
+        process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound+1] = 0
+        //increments the index of stop time
+        process[highestPrioIndex].nxtStartRound++
+      }      
     }
 
     //condition if the process is found
