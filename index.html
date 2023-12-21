@@ -96,9 +96,20 @@
 
     <section id="gantt-breakdown">
       <div id="gantTitle">Gantt Chart Look</div>
+      <div id="com-legend"></div>
       <div id="bdms">
         <div>0</div><div>0</div><div>0</div><div>0</div><div>0</div>
       </div>
+      <section id="compressed" style="display: flex;">
+        <div id="bd-prcs1 com1"></div>
+        <div id="bd-prcs2 com2"></div>
+        <div id="bd-prcs3 com3"></div>
+        <div id="bd-prcs4 com4"></div>
+        <div id="bd-prcs5 com5"></div>
+        <div id="bd-prcs6 com6"></div>
+        <div id="bd-prcs7 com7"></div>
+        <div id="bd-prcs8 com8"></div>
+      </section>
 
       <section id="breakdown-section">
         <section id="prcs-id">
@@ -111,6 +122,7 @@
           <div>P7</div>
           <div>P8</div>
         </section>
+        
         <section id="prcs-content">
           <div id="bd-prcs1"></div>
           <div id="bd-prcs2"></div>
@@ -122,7 +134,11 @@
           <div id="bd-prcs8"></div>
         </section>
       </section>
-
+      <div id="expand">
+        <button id="gant-mode" onclick="showGanttBD()">expand</button>
+       
+      </div>
+      
     </section>
   </div>
 
