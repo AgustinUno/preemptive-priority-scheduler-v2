@@ -152,47 +152,6 @@ margin-bottom: 11px;
   text-align: center left;
 }
 
-.info-popup {
-  width: 400px;
-  height: 250px;
-  background: rgba(48, 10, 182, 0.397); 
-  border-radius: 7px;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.1);
-  text-align: center;
-  backdrop-filter: blur(10px);
-  visibility: hidden;
-  transition: transform 0.4s;
-}
-  .open-info{
-visibility: visible;
-transform: translate(-50%, -50%) scale(1);
-
-  }
-
-
-#popbtn{
-height: 50px;
-width: 100px;
-margin-top: 15px;
-
-
-}
-.poptext{
-
-color: azure;
-font-size:15px;
-padding-top:65px;
-padding-left: 50px;
-padding-right: 50px;
-
-
-}
-
-
-
 body {
   font-family: "Inter";
   display: flex;
