@@ -193,7 +193,6 @@ function compute() {
   let completed = 0
   let currentTime = 0
   let prevIndex = 0
-  let stopRound = 0
 
   //loop until all the process is finished
   while (completed < nOfprcs) {
@@ -246,10 +245,13 @@ function compute() {
       }
     }
 
+    
+
     //condition to set the starting time
     if (currentTime == 0) {
       currentTime += process[highestPrioIndex].arrivalTime
-    }
+    }   
+    
 
     //condition to collect the data of stop time and start of the previous process
     if (highestPrioIndex != prevIndex && currentTime != 0) {
@@ -304,6 +306,7 @@ function compute() {
 
       //updates the data of the highest priority process
       process[highestPrioIndex] = currentProcess
+
 
       //fetches the value for gantt chart
       gantt[num] = currentProcess
@@ -442,6 +445,7 @@ function ganttChart() {
 
       //prints the name of the process into the gantt chart
       ganttCell.textContent = 'P' + gantt[xq].Prcsname
+
       //creates the cell into html
       ganttRow.appendChild(ganttCell)
       //holds the current process for comparing

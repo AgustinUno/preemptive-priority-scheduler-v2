@@ -142,7 +142,14 @@ margin-bottom: 11px;
 }
 
 .info:hover {
+  background-position: center right;
+  text-wrap: nowrap;
+  width: 320px;
 
+  font-size: small;
+  padding: 12px 20px;
+  padding-bottom: 0px;
+  text-align: center left;
 }
 
 .info-popup {
@@ -184,7 +191,8 @@ padding-right: 50px;
 
 }
 
- 
+
+
 body {
   font-family: "Inter";
   display: flex;
@@ -642,7 +650,7 @@ p {
   padding: 30px 15px;
   background-color: rgb(235, 232, 232);
   max-width: 100em;
-  min-width: 14em;
+  min-width: 4em;
 }
 
 #prcs-id {
@@ -658,7 +666,6 @@ p {
 }
 
 #prcs-content>div {
-  border-radius: 7px;
   min-height: 2em;
   min-width: 1em;
   max-width: 100em;
