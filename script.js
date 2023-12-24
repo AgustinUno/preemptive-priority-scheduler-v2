@@ -1,3 +1,47 @@
+class Queue {
+  constructor() {
+    this.items = [];
+  }
+
+  addQ(item) {
+    return this.items.push(item);
+  }
+
+  removeQ() {
+    return this.items.shift();
+  }
+
+  peek() {
+    return this.items[0];
+  }
+
+  getSize() {
+    return this.items.length;
+  }
+
+  isEmpty() {
+    return this.getSize() === 0;
+  }
+
+  findProcess(item) {
+    let key = 0
+    while (this.items[key] != null) {
+      if (this.items[key].name === item)
+        return false
+      key++;
+    }
+
+
+    return true
+  }
+
+  prioSort() {
+    this.items.sort((a, b) => a.prio - b.prio)
+  }
+}
+
+const waiting = new Queue();
+
 //decralations for the mostly used outside of functions
 //global declarations
 var nOfprcs = 4
@@ -124,6 +168,7 @@ function createTable() {
 }
 
 function fetch() {
+  gantt = []
   showIt = 0
   let comleg = document.querySelector('#com-legend')
   comleg.innerHTML = ''
@@ -165,187 +210,102 @@ function fetch() {
       let burstTime = document.getElementById('brsTime' + (x + 1)).value
       let priority = document.getElementById('prio' + (x + 1)).value
       process.push({
-        Prcsname: x + 1,
-        arrivalTime: +arrivalTime,
+        name: x + 1,
+        arT: +arrivalTime,
         burstTime: +burstTime,
-        priority: +priority,
+        prio: +priority,
         startTime: 0,
         endTime: 0,
-        remainingBurstTime: +burstTime,
+        remainingBT: +burstTime,
         round: 0,
         stopTime: [0],
-        nxtStartTime: [0],
+        nxtStart: [0],
         ganttRound: 0,
         BDRound: 0,
-        nxtStartRound: 0,
-        nxtStopRound: 0,
-        comRound: 0
+        startRound: 0,
+        stopRound: 0,
+        comRound: 0,
+        jobDone: 0
       })
     }
+    console.log('schedule')
     //function call to compute
-    compute()
+    scheduling()
   }
 }
 
-//function to compute the process inputs
-function compute() {
-  let num = 0
-  let completed = 0
-  let currentTime = 0
+const scheduling = () => {
+  let complete = 0
+  let currentMs = 0
+  let prioIndex = 0
   let prevIndex = 0
 
-  //loop until all the process is finished
-  while (completed < nOfprcs) {
-    let highestPrioIndex = 0
-    let holdPriority = 99999
-    let holdArrival = 0
-
-    //condition for starting time
-    if (currentTime == 0) {
-      //sorting the process into order of their arrival time
-      for (let x = nOfprcs - 1; x >= 0; x--) {
-        for (let y = nOfprcs - 1; y >= 0; y--) {
-          if (process[x].arrivalTime > process[y].arrivalTime) {
-            let hold = process[y]
-            process[y] = process[x]
-            process[x] = hold
-          }
-          else if ((process[x].arrivalTime == process[y].arrivalTime)) {
-            //swapping if the process has an equal arrival time
-            if (process[x].priority > process[y].priority) {
-              let hold = process[y]
-              process[y] = process[x]
-              process[x] = hold
-            }
-          }
-        }
+  while (complete < nOfprcs) {
+    for (var key in process) {
+      if (process[key].arT <= currentMs && waiting.findProcess(process[key].name) && process[key].remainingBT > 0) {
+        waiting.addQ(process[key])
       }
     }
 
-    //loop for finding the index of the highest priority
-    for (let x = 0; x < nOfprcs; x++) {
-      if (
-        process[x].arrivalTime <= (currentTime) &&
-        process[x].remainingBurstTime > 0 &&
-        process[x].priority < holdPriority
-      ) {
-        //to hold the current priority
-        holdPriority = process[x].priority
-        holdArrival = process[x].arrivalTime
-        //to hold the index of the highest priority
-        highestPrioIndex = x
-      } else if (
-        process[x].arrivalTime <= (currentTime) &&
-        process[x].remainingBurstTime > 0 &&
-        process[x].priority == holdPriority
-      ) {
-        if (process[x].arrivalTime < holdArrival) {
-          highestPrioIndex = x
-        }
-      }
-    }
+    waiting.prioSort()
+    prioIndex = waiting.peek()
 
-    
-
-    //condition to set the starting time
-    if (currentTime == 0) {
-      currentTime += process[highestPrioIndex].arrivalTime
-    }   
-    
-
-    //condition to collect the data of stop time and start of the previous process
-    if (highestPrioIndex != prevIndex && currentTime != 0) {
-      let x = 0
-
-      //loop for fetching the stop time of the previous process
-      if (process[prevIndex].remainingBurstTime != 0) {
-        //fetches the stop time of the previous process
-        process[prevIndex].stopTime[process[prevIndex].nxtStopRound] = currentTime
-        //declares next index  of stop time as zero for while loops
-        process[prevIndex].stopTime[process[prevIndex].nxtStopRound + 1] = 0
+    if (prioIndex != prevIndex && currentMs != 0 && prioIndex != null && prevIndex != null) {
+      if (prevIndex.remainingBurstTime != 0) {
+        prevIndex.stopTime[prevIndex.stopRound] = currentMs
         //increments the index of stop time
-        process[prevIndex].nxtStopRound++
+        prevIndex.stopRound++
       }
-      //condition for the next start time if the current process had previously arrived
-      if (process[highestPrioIndex].round != 0) {
+      //condition for the next start time if the current process had previously arrived      
+
+      if (prioIndex.round != 0) {
         //fetches the the next starting time of the current process
-        process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound] = currentTime
-        //declares next index of start time as zero for while loops
-        process[highestPrioIndex].nxtStartTime[process[highestPrioIndex].nxtStartRound + 1] = 0
+        prioIndex.nxtStart[prioIndex.startRound] = currentMs
         //increments the index of stop time
-        process[highestPrioIndex].nxtStartRound++
+        prioIndex.startRound++
       }
+
     }
 
-    //condition if the process is found
-    //negative value because an index can be zero
-    if (highestPrioIndex != -1) {
-      //holds the highest priority
-      let currentProcess = process[highestPrioIndex]
+    prevIndex = prioIndex
 
-      //condition for the process' first arrival
-      if (currentProcess.round == 0) {
-        //holds the first start time
-        currentProcess.startTime = currentTime
+    let highestPrio = waiting.removeQ()
+
+    if (highestPrio != null) {
+      if (highestPrio.round == 0) {
+        highestPrio.startTime = currentMs
       }
 
-      //increments the time (equivalent to milisecond)
-      currentTime++
-
-      ////decrements the burst time of the current process
-      currentProcess.remainingBurstTime--
-
-      //increments round of the current process
-      currentProcess.round++
-
-      //condition if the current process has no remaining burst time
-      if (currentProcess.remainingBurstTime == 0) {
-        currentProcess.endTime = currentTime
-        completed++
+      highestPrio.remainingBT--
+      highestPrio.round++
+      currentMs++
+      if (highestPrio.remainingBT == 0) {
+        complete++
+        highestPrio.endTime = currentMs
+        endmsTime = currentMs
       }
-
-      //updates the data of the highest priority process
-      process[highestPrioIndex] = currentProcess
-
-
-      //fetches the value for gantt chart
-      gantt[num] = currentProcess
-      ////declares next index of the gantt chart as zero for while loops
-      gantt[num + 1] = 0
-      //incrementation for gantt chart variable
-      num++
+      gantt.push(highestPrio)
     }
     else {
-      //increments the time only
-      currentTime++
+      gantt.push({ name: 0, endTime: currentMs + 1, startTime: currentMs, ganttRound: 0, comRound: 0, stopTime: [0] })
+      currentMs++;
     }
-    //variable to hold the end time of the cycle
-    endmsTime = currentTime;
-    //holds the previous highest priority index
-    prevIndex = highestPrioIndex
+
   }
 
-  //section that checks if the arrival times fits for the total of burst times
-  let incArrive = 0
-  let AllBurstTimes = 0
-  //increments all the burst times
-  for (let x = 0; x < nOfprcs; x++) {
-    AllBurstTimes += process[x].burstTime
-  }
-
-  //loop for checking if all arrival times are under the total of burst times
-  for (let x = 0; x < nOfprcs; x++) {
-    if (process[x].arrivalTime < AllBurstTimes) {
-      incArrive++;
-    }
-  }
-
-  //condition to call next function if the arrival times are fit
-  if (incArrive == nOfprcs) {
-    //function call for output container
+  
     showDisplay()
-  }
+  
+
+
 }
+
+
+
+
+
+
+
 
 //function to show the output display
 function showDisplay() {
@@ -363,14 +323,12 @@ function printPrcssTimes() {
   //prints header into console
   console.log('Process\tStart TIme\tEnd Time\n')
   //loop for printing all the times
-  for (let x = 0; x < nOfprcs; x++) {
-    let y = 0
+  for (var x in process) {
     //prints the process name and its start time
-    console.log('P' + process[x].Prcsname + '\t' + process[x].startTime)
-    //loop that prints all next start times of the process
-    while (process[x].nxtStartTime[y] != 0) {
-      console.log('  ' + process[x].nxtStartTime[y])
-      y++
+    console.log('P' + process[x].name + '\t' + process[x].startTime)
+    //loop that prints all next start times of the process    
+    for (var y in process[x].nxtStart[y]) {
+      console.log('  ' + process[x].nxtStart[y])
     }
     //prints the end time of the process
     console.log('\t\t' + process[x].endTime)
@@ -382,9 +340,6 @@ function printPrcssTimes() {
 //function to create gantt chart
 function ganttChart() {
   let prevGantt = 0
-  let prevGround = 0
-  let xq = 0
-
 
   // Creates rows for Gantt chart
   let ganttRow = document.createElement('div')
@@ -398,61 +353,42 @@ function ganttChart() {
   ganttTitle.classList.add('content')
 
   //loop to show all the process in gantt chart
-  while (gantt[xq].Prcsname != null) {
+  for (var xq in gantt) {
     let y = 0;
     // Create cells for Gantt chart
     let ganttCell = document.createElement('div')
     let ganttMsCell = document.createElement('div')
 
     //condition if the current process is not the previous
-    if (gantt[xq].Prcsname != prevGantt) {
+    if (gantt[xq].name != prevGantt) {
       //condition if it is the process first round
       if (gantt[xq].ganttRound == 0) {
         //prints the starting millisecond of the process
         ganttMsCell.textContent = gantt[xq].startTime
         //prints the cell into html
         ganttMs.appendChild(ganttMsCell)
-        //loop to show all the process in gantt chart
-        while (gantt[y].Prcsname != null) {
-          //condition to increment the rounds of current process in the gantt variable 
-          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == 0) {
-            //increments gantt round
-            gantt[y].ganttRound++
-          }
-          //increment for the loop
-          y++;
-        }
+        gantt[xq].ganttRound++
       }
       //condition if the process is still the same
       else {
-        //holds the value of the round of current process
-        prevGround = gantt[y].ganttRound
         //prints the value of the next time of the process
-        ganttMsCell.textContent = gantt[xq].nxtStartTime[gantt[xq].ganttRound - 1]
+        ganttMsCell.textContent = gantt[xq].nxtStart[gantt[xq].ganttRound - 1]
         //creates the cell into html
         ganttMs.appendChild(ganttMsCell)
-        //loop to show all the process in gantt chart
-        while (gantt[y].Prcsname != null) {
-          //condition to increment the rounds of current process in the gantt variable 
-          if (gantt[y].Prcsname == gantt[xq].Prcsname && gantt[y].ganttRound == prevGround) {
-            //increments gantt round
-            gantt[y].ganttRound++
-          }
-          //increment for the loop
-          y++;
-        }
+        gantt[xq].ganttRound++
       }
 
       //prints the name of the process into the gantt chart
-      ganttCell.textContent = 'P' + gantt[xq].Prcsname
+      if (gantt[xq].name == 0)
+        ganttCell.textContent = '-'
+      else
+        ganttCell.textContent = 'P' + gantt[xq].name
 
       //creates the cell into html
       ganttRow.appendChild(ganttCell)
       //holds the current process for comparing
-      prevGantt = gantt[xq].Prcsname
+      prevGantt = gantt[xq].name
     }
-    //incrementation for the loop
-    xq++
   }
   //prints the millisecond into the gantt chart
   ganttendMsCell.textContent = endmsTime
@@ -473,26 +409,15 @@ function ganttChart() {
 function output() {
   let outputHtml = ''
 
-  //sorting the process by name
-  for (let x = 0; x < nOfprcs; x++) {
-    for (let y = 0; y < nOfprcs; y++) {
-      if (process[x].Prcsname < process[y].Prcsname) {
-        let hold = process[y]
-        process[y] = process[x]
-        process[x] = hold
-      }
-    }
-  }
-
   //TURN AROUND TIME
   let totalturnAroundTime = 0;
 
   //loop for computing the turn around time of all the process
-  for (let x = 0; x < nOfprcs; x++) {
+  for (let x in process) {
     //formula for turn around time
-    let turnAroundTime = process[x].endTime - process[x].arrivalTime
+    let turnAroundTime = process[x].endTime - process[x].arT
     //prints the computations into html
-    outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].endTime} - ${process[x].arrivalTime} = ${turnAroundTime}</p>`
+    outputHtml += `<p> P${process[x].name} &nbsp;&nbsp;${process[x].endTime} - ${process[x].arT} = ${turnAroundTime}</p>`
     //increments the values of the tat to create total
     totalturnAroundTime += turnAroundTime
   }
@@ -516,38 +441,37 @@ function output() {
   let totalWaitingTime = 0
 
   //loop for computing the waiting time of all the process
-  for (let x = 0; x < nOfprcs; x++) {
+  for (let x in process) {
     let y = 0
     //formula for waiting time
-    let waitingTime = process[x].startTime - process[x].arrivalTime
+    let waitingTime = process[x].startTime - process[x].arT
 
     //condition if the next start have value
-    if (process[x].nxtStartTime[0] != 0) {
+    if (process[x].nxtStart[0] != 0) {
       //prints the computations into html
-      outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;(${process[x].startTime} - ${process[x].arrivalTime}) + `;
+      outputHtml += `<p> P${process[x].name} &nbsp;&nbsp;(${process[x].startTime} - ${process[x].arT}) + `;
 
       //loop for computing the extra start times and stop times
-      while (process[x].nxtStartTime[y] != 0) {
+      while (process[x].nxtStart[y] != null) {
         //formula for waiting time but with extra times
-        let nxtWaitingtime = process[x].nxtStartTime[y] - process[x].stopTime[y];
+        let nxtWaitingtime = process[x].nxtStart[y] - process[x].stopTime[y];
         //increments the values of the wt to create total
         waitingTime += nxtWaitingtime;
         //condition if the value still has further extra times
-        if (process[x].nxtStartTime[y + 1] != 0) {
+        if (process[x].nxtStart[y + 1] != null) {
           //prints the computation but with a plus sign to compensate for the further extra time
-          outputHtml += `(${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) + `
+          outputHtml += `(${process[x].nxtStart[y]} - ${process[x].stopTime[y]}) + `
         }
         else {
           //prints the computation but without plus sign
-          outputHtml += ` (${process[x].nxtStartTime[y]} - ${process[x].stopTime[y]}) = ${waitingTime}</p>`
+          outputHtml += ` (${process[x].nxtStart[y]} - ${process[x].stopTime[y]}) = ${waitingTime}</p>`
         }
-        //incrementation for the loop
-        y++
+        y++;
       }
     }
     else {
       //prints the computations into html
-      outputHtml += `<p> P${process[x].Prcsname} &nbsp;&nbsp;${process[x].startTime} - ${process[x].arrivalTime} = ${waitingTime}</p>`
+      outputHtml += `<p> P${process[x].name} &nbsp;&nbsp;${process[x].startTime} - ${process[x].arT} = ${waitingTime}</p>`
     }
 
     //increments the values of the wt to create total
@@ -586,76 +510,63 @@ function output() {
 //function for gantt chart breakdown
 function compressedGantt() {
   var showBreakdown = document.getElementById("breakdown-section");
-  showBreakdown.style.display = 'none'
-
-  let prevGantt = 0
-  let xq = 0
+  showBreakdown.style.display = 'none'  
 
   document.getElementById("bdms").style.marginLeft = "55px"
 
   //loop to show all the process in gantt chart
-  while (gantt[xq].Prcsname != null) {
+  for (let xq in gantt) {
     let y = 0
     // Create cells for Gantt chart
     let ganttBDRow = document.createElement('div')
 
     //sets the process id
-    ganttBDRow.id = 'bd-prcs' + gantt[xq].Prcsname
-    console.log("current p"+gantt[xq].Prcsname)
+    ganttBDRow.id = 'bd-prcs' + gantt[xq].name
+    console.log("current p" + gantt[xq].name)
     //set the width equal to turn around time
     if (gantt[xq].stopTime[0] != 0) {
       if (gantt[xq].comRound == 0) {
-        let width = gantt[xq].stopTime[0] - gantt[xq].arrivalTime
-        console.log("comround==0 width = "+width)
+        let width = gantt[xq].stopTime[0] - gantt[xq].arT
+        console.log("comround==0 width = " + width)
         //set the margin equal to arrival time
-        ganttBDRow.style.marginLeft = gantt[xq].arrivalTime + "em"
+        ganttBDRow.style.marginLeft = gantt[xq].arT + "em"
         ganttBDRow.style.width = width + "em"
         document.getElementById('compressed').appendChild(ganttBDRow);
-        while (gantt[y].Prcsname != null) {
-          //condition to increment the round of current process
-          if (gantt[y].Prcsname === gantt[xq].Prcsname && gantt[y].comRound == 0) {
-            //increment round
-            gantt[y].comRound++;
-            //holds highest round
-            highComround = gantt[y].comRound
-          }
-          y++;
-        }
+
+        gantt[xq].comRound++;
+
       }
       else {
-        if (gantt[xq].stopTime[gantt[xq].comRound] != 0) {
-          let width =gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStartTime[gantt[xq].comRound - 1]
-          console.log("comround!=0 width and still has next index= "+width)
+        if (gantt[xq].stopTime[gantt[xq].comRound] != null) {
+          let width = gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStart[gantt[xq].comRound - 1]
+          console.log("comround!=0 width and still has next index= " + width)
           prevComround = gantt[xq].comRound
-          ganttBDRow.style.marginLeft = gantt[xq].nxtStartTime[gantt[xq].comRound - 1] + "em"
-          ganttBDRow.style.width =  width + "em"
-          document.getElementById('compressed').appendChild(ganttBDRow);
-
-          
-          //loop to show all the process in gantt chart
-          while (gantt[y].Prcsname != null) {
-            //condition to increment the round of current process
-            if (gantt[y].Prcsname === gantt[xq].Prcsname && gantt[y].comRound == prevComround) {
-              //increment round
-              gantt[y].comRound++;
-              //holds highest round
-              highComround = gantt[y].comRound
-            }
-            y++;
-          }
-        }
-        else {
-          
-          let width =(gantt[xq].endTime - gantt[xq].nxtStartTime[gantt[xq].comRound - 1])
-          console.log("comround!=0  and no next index width= "+width) 
-          ganttBDRow.style.marginLeft = gantt[xq].nxtStartTime[gantt[xq].comRound - 1] + "em"
+          ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
           ganttBDRow.style.width = width + "em"
           document.getElementById('compressed').appendChild(ganttBDRow);
+
+
+
+          gantt[xq].comRound++;
+
+        }
+        else {
+
+          let width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
+          console.log("comround!=0  and no next index width= " + width)
+          if (gantt[xq].comRound == 1 && gantt[xq].nxtStart[gantt[xq].comRound-1] == 0)
+            ganttBDRow.style.marginLeft = gantt[xq].arT + "em"
+          else
+            ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
+
+          ganttBDRow.style.width = width + "em"
+          document.getElementById('compressed').appendChild(ganttBDRow);
+          gantt[xq].comRound++;
         }
       }
     } else {
       let width = gantt[xq].endTime - gantt[xq].startTime
-      console.log("no stoptime and no next index width= "+width)
+      console.log("no stoptime and no next index width= " + width)
       //set the margin equal to arrival time
       ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
       ganttBDRow.style.width = width + "em"
@@ -669,11 +580,6 @@ function compressedGantt() {
 
     //holds the name of the process for comparing
     prevGantt = gantt[xq].Prcsname
-
-
-
-    //incrementtation for the loop
-    xq++
   }
   document.getElementById('compressed').style.width = endmsTime + 'em'
 
@@ -684,47 +590,38 @@ function compressedGantt() {
 //function for gantt chart breakdown
 function ganttBreakdown() {
   let prevGantt = 0
-  let xq = 0
-
+  
   // Clear previous table content  
   const prcsID = document.querySelector('#prcs-id')
   prcsID.innerHTML = ''
   gbd.innerHTML = ''
 
   //loop to show all the process in gantt chart
-  while (gantt[xq].Prcsname != null) {
+  for ( let xq in gantt) {
     let y = 0
     // Create cells for Gantt chart
     let ganttBDRow = document.createElement('div')
     let ganttBDName = document.createElement('div')
     //condition if the process is not the same as previous process and the process' first round in the loop
-    if (gantt[xq].Prcsname != prevGantt && gantt[xq].BDRound == 0) {
+    if (gantt[xq].name != prevGantt && gantt[xq].BDRound == 0) {
       //prints the process name
-      ganttBDName.textContent = "P" + gantt[xq].Prcsname
+      ganttBDName.textContent = "P" + gantt[xq].name
 
       //sets the process id
-      ganttBDRow.id = 'bd-prcs' + gantt[xq].Prcsname
+      ganttBDRow.id = 'bd-prcs' + gantt[xq].name
 
       //set the margin equal to arrival time
-      ganttBDRow.style.marginLeft = gantt[xq].arrivalTime + "em"
+      ganttBDRow.style.marginLeft = gantt[xq].arT + "em"
       //set the width equal to turn around time
-      ganttBDRow.style.width = (gantt[xq].endTime - gantt[xq].arrivalTime) + "em"
+      ganttBDRow.style.width = (gantt[xq].endTime - gantt[xq].arT) + "em"
       //creates the cells into html
       document.getElementById('prcs-content').appendChild(ganttBDRow);
       document.getElementById('prcs-id').appendChild(ganttBDName)
 
-      //loop to show all the process in gantt chart
-      while (gantt[y].Prcsname != null) {
-        //condition to increment the round of current process
-        if (gantt[y].Prcsname === gantt[xq].Prcsname && gantt[xq].BDRound == 0) {
-          //increment round
-          gantt[y].BDRound++;
-        }
-        //incrementtation for the loop
-        y++;
-      }
+      gantt[xq].BDRound++
+      
       //holds the name of the process for comparing
-      prevGantt = gantt[xq].Prcsname
+      prevGantt = gantt[xq].name
     }
     //incrementtation for the loop
     xq++

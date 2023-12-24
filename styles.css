@@ -374,12 +374,15 @@ height: 170px;
   padding: 2px;
   border-radius: 5px;
   max-width: fit-content;
+  
 }
 
 .ch>div {
   border-radius: 5px;
   padding: 10px;
   background-color: white;
+  min-width: 1em;
+  text-align: center;
 }
 
 button {
@@ -660,6 +663,10 @@ p {
 
 #bd-prcs8 {
   background-color: rgb(248, 66, 172);
+}
+
+#bd-prcs0 {
+  background-color: rgb(235, 232, 232);
 }
 
 #bdms {
