@@ -5,13 +5,6 @@
   font-weight: lighter;
 }
 
-@font-face {
-  font-family: "Inter2";
-  src: local("Inter2"),
-    url("Assets/Google-sans-Font-Family/ProductSans-Regular.ttf") format("truetype");
-  font-weight: lighter;
-}
-
 .buttons-input {
   display: flex;
   flex-direction: column;
@@ -37,9 +30,7 @@ margin-bottom: 11px;
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.5s ease, filter 0.5s ease, box-shadow 0.5s ease;
-  margin-left: 10px;
-
- 
+  margin-left: 10px; 
 }
 
 

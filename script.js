@@ -287,7 +287,7 @@ const scheduling = () => {
       gantt.push(highestPrio)
     }
     else {
-      gantt.push({ name: 0, endTime: currentMs + 1, startTime: currentMs, ganttRound: 0, comRound: 0, stopTime: [0] })
+      gantt.push({ name: 0, endTime: currentMs + 1, startTime: currentMs, ganttRound: 0, comRound: 0, nxtStart: [0] })
       currentMs++;
     }
 
@@ -315,25 +315,6 @@ function showDisplay() {
   showOutput.style.display = displayValue;
 
   //function call to print into console the computations for debugging
-  printPrcssTimes()
-}
-
-//function to print the times of all the processes
-function printPrcssTimes() {
-  //prints header into console
-  console.log('Process\tStart TIme\tEnd Time\n')
-  //loop for printing all the times
-  for (var x in process) {
-    //prints the process name and its start time
-    console.log('P' + process[x].name + '\t' + process[x].startTime)
-    //loop that prints all next start times of the process    
-    for (var y in process[x].nxtStart[y]) {
-      console.log('  ' + process[x].nxtStart[y])
-    }
-    //prints the end time of the process
-    console.log('\t\t' + process[x].endTime)
-  }
-  //function call to print gantt chart
   ganttChart()
 }
 
@@ -520,16 +501,19 @@ function compressedGantt() {
     // Create cells for Gantt chart
     let ganttBDRow = document.createElement('div')
 
+
+    let width = 0
+
     //sets the process id
     ganttBDRow.id = 'bd-prcs' + gantt[xq].name
     console.log("current p" + gantt[xq].name)
     //set the width equal to turn around time
-    if (gantt[xq].stopTime[0] != 0) {
+    if (gantt[xq].nxtStart[0] != 0) {
       if (gantt[xq].comRound == 0) {
-        let width = gantt[xq].stopTime[0] - gantt[xq].arT
+        width = gantt[xq].stopTime[0] - gantt[xq].startTime
         console.log("comround==0 width = " + width)
         //set the margin equal to arrival time
-        ganttBDRow.style.marginLeft = gantt[xq].arT + "em"
+        ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
         ganttBDRow.style.width = width + "em"
         document.getElementById('compressed').appendChild(ganttBDRow);
 
@@ -538,7 +522,7 @@ function compressedGantt() {
       }
       else {
         if (gantt[xq].stopTime[gantt[xq].comRound] != null) {
-          let width = gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStart[gantt[xq].comRound - 1]
+          width = gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStart[gantt[xq].comRound - 1]
           console.log("comround!=0 width and still has next index= " + width)
           prevComround = gantt[xq].comRound
           ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
@@ -552,12 +536,13 @@ function compressedGantt() {
         }
         else {
 
-          let width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
+          
           console.log("comround!=0  and no next index width= " + width)
-          if (gantt[xq].comRound == 1 && gantt[xq].nxtStart[gantt[xq].comRound-1] == 0)
-            ganttBDRow.style.marginLeft = gantt[xq].arT + "em"
-          else
+          
+            width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
             ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
+          
+            
 
           ganttBDRow.style.width = width + "em"
           document.getElementById('compressed').appendChild(ganttBDRow);
