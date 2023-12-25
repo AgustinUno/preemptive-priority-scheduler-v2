@@ -11,17 +11,9 @@ class Queue {
     return this.items.shift();
   }
 
-  peek() {
+  frontQ() {
     return this.items[0];
-  }
-
-  getSize() {
-    return this.items.length;
-  }
-
-  isEmpty() {
-    return this.getSize() === 0;
-  }
+  } 
 
   findProcess(item) {
     let key = 0
@@ -30,7 +22,6 @@ class Queue {
         return false
       key++;
     }
-
 
     return true
   }
@@ -46,12 +37,7 @@ const waiting = new Queue();
 //decralations for the mostly used outside of functions
 //global declarations
 var nOfprcs = 4
-let process = [
-  (Prcsname = 0),
-  (arrivalTime = 0),
-  (burstTime = 0),
-  (priority = 0)
-]
+let process = []
 let gantt = []
 let endmsTime = 0;
 let showIt = 0
@@ -225,11 +211,9 @@ function fetch() {
         BDRound: 0,
         startRound: 0,
         stopRound: 0,
-        comRound: 0,
-        jobDone: 0
+        comRound: 0
       })
     }
-    console.log('schedule')
     //function call to compute
     scheduling()
   }
@@ -249,7 +233,7 @@ const scheduling = () => {
     }
 
     waiting.prioSort()
-    prioIndex = waiting.peek()
+    prioIndex = waiting.frontQ()
 
     if (prioIndex != prevIndex && currentMs != 0 && prioIndex != null && prevIndex != null) {
       if (prevIndex.remainingBurstTime != 0) {
@@ -291,22 +275,9 @@ const scheduling = () => {
       gantt.push({ name: 0, endTime: currentMs + 1, startTime: currentMs, ganttRound: 0, comRound: 0, nxtStart: [0] })
       currentMs++;
     }
-
   }
-
-  
-    showDisplay()
-  
-
-
+  showDisplay()
 }
-
-
-
-
-
-
-
 
 //function to show the output display
 function showDisplay() {
@@ -492,7 +463,7 @@ function output() {
 //function for gantt chart breakdown
 function compressedGantt() {
   var showBreakdown = document.getElementById("breakdown-section");
-  showBreakdown.style.display = 'none'  
+  showBreakdown.style.display = 'none'
 
   document.getElementById("bdms").style.marginLeft = "55px"
 
@@ -537,13 +508,13 @@ function compressedGantt() {
         }
         else {
 
-          
+
           console.log("comround!=0  and no next index width= " + width)
-          
-            width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
-            ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
-          
-            
+
+          width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
+          ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
+
+
 
           ganttBDRow.style.width = width + "em"
           document.getElementById('compressed').appendChild(ganttBDRow);
@@ -562,13 +533,11 @@ function compressedGantt() {
 
     //sets z-index
     ganttBDRow.style.zIndex = xq
-    //creates the cells into html
 
     //holds the name of the process for comparing
     prevGantt = gantt[xq].Prcsname
   }
   document.getElementById('compressed').style.width = endmsTime + 'em'
-
 
   ganttBreakdown()
 }
@@ -576,14 +545,14 @@ function compressedGantt() {
 //function for gantt chart breakdown
 function ganttBreakdown() {
   let prevGantt = 0
-  
+
   // Clear previous table content  
   const prcsID = document.querySelector('#prcs-id')
   prcsID.innerHTML = ''
   gbd.innerHTML = ''
 
   //loop to show all the process in gantt chart
-  for ( let xq in gantt) {
+  for (let xq in gantt) {
     let y = 0
     // Create cells for Gantt chart
     let ganttBDRow = document.createElement('div')
@@ -605,7 +574,7 @@ function ganttBreakdown() {
       document.getElementById('prcs-id').appendChild(ganttBDName)
 
       gantt[xq].BDRound++
-      
+
       //holds the name of the process for comparing
       prevGantt = gantt[xq].name
     }
