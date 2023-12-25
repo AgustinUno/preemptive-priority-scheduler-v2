@@ -36,6 +36,7 @@ class Queue {
   }
 
   prioSort() {
+    this.items.sort((a, b) => a.arT - b.arT)
     this.items.sort((a, b) => a.prio - b.prio)
   }
 }
