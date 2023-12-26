@@ -1,7 +1,7 @@
 @font-face {
-  font-family: 'Inter';
-  src: local('Inter'),
-    url('Assets/Inter/Inter-VariableFont_slnt\,wght.ttf') format('truetype');
+  font-family: "Inter";
+  src: local("Inter"),
+    url("Assets/Inter/Inter-VariableFont_slnt\,wght.ttf") format("truetype");
   font-weight: lighter;
 }
 
@@ -23,8 +23,8 @@
   color: black;
   border-radius: 7px;
   background: #ffffff;
-  box-shadow: 1px 1.74375px 10px rgba(0, 0, 0, 0.24);
-  background-image: url('Assets/pictures/moon-svgrepo-com.png');
+  box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
+  background-image: url("Assets/pictures/moon-svgrepo-com.png");
   background-size: cover;
   background-size: 35px;
   background-repeat: no-repeat;
@@ -33,13 +33,9 @@
   margin-left: 10px;
 }
 
-
-
 .dark-mode .menu {
-  background-image: url('Assets/pictures/sun-2-svgrepo-com(1).png');
+  background-image: url("Assets/pictures/sun-2-svgrepo-com(1).png");
 }
-
-
 
 .dark-mode {
   filter: invert(1);
@@ -68,20 +64,20 @@
 
 .info {
   background-color: white;
-  background-image: url('Assets/pictures/about-us.png');
+  background-image: url("Assets/pictures/about-us.png");
   background-size: 45px;
   background-position: center;
   width: 50px;
   height: 50px;
   border-radius: 7px;
-  box-shadow: 0px 0px 13.95px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
   margin-left: 10px;
   transition: transform 0.5s ease, filter 0.5s ease;
+  cursor: pointer;
 }
 
 .info:active {
-  transform: scale(0.8);
-  filter: brightness(0.5);
+  transform: scale(0.8) !important;
 }
 
 .info:hover {
@@ -89,16 +85,61 @@
   filter: invert(100%);
   box-shadow: 0 0 100px 200px rgba(255, 255, 255, 0);
 }
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 100px rgba(5, 20, 69, 0.796);
+  z-index: 1000;
+  border-radius: 7px;
+  text-align: center;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+
+}
+
+
+.modal.open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modalTitle {
+  font-size: 25px;
+  margin: 10px;
+}
+
+.modalSub {
+  opacity: 50%;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.close {
+  position: relative;
+  background-color: rgb(38, 132, 255);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  width: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 
 body {
-  font-family: 'Inter';
+  font-family: "Inter";
   display: flex;
   flex-direction: column;
- padding-top: 1%;
+  padding-top: 1%;
   background-color: #fff2f2;
   gap: 1em;
-  
   transition: filter 0.3s ease-in-out, background-color 0.3s ease;
+
 }
 
 body,
@@ -151,7 +192,7 @@ section {
 
 #errors {
   background-color: white;
-  background-image: url('Assets/pictures/warning.png');
+  background-image: url("Assets/pictures/warning.png");
   background-size: 32px;
   background-repeat: no-repeat;
   background-position: center;
@@ -162,7 +203,8 @@ section {
   max-width: 400px;
   color: black;
   border-radius: 7px;
-  box-shadow: 0 1.74375px 13.95px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
+  cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
 }
 
@@ -172,7 +214,7 @@ section {
   filter: invert(100%);
 }
 
-#errors:active{
+#errors:active {
   transform: scale(0.8);
   filter: brightness(0.5);
 }
@@ -211,7 +253,7 @@ section {
 }
 
 .nOpcrs {
-  font-family: 'Inter';
+  font-family: "Inter";
   height: 40px;
   width: 15px;
   margin: 5px;
@@ -223,7 +265,7 @@ section {
 .ok {
   background-color: rgb(102, 255, 0);
   margin-left: 5px;
-  background-image: url('Assets/pictures/mark.png');
+  background-image: url("Assets/pictures/mark.png");
   /* Set the path to your image */
   background-size: 15px 15px;
   background-repeat: no-repeat;
@@ -254,7 +296,7 @@ section {
 #prcsTbl > tr > td > input {
   border: none;
   text-align: center;
-  font-family: 'Inter';
+  font-family: "Inter";
   background: transparent;
 }
 
@@ -272,7 +314,7 @@ section {
 
 #cmpte {
   margin-top: 10px;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-weight: 600;
   color: white;
   font-size: medium;
@@ -280,7 +322,7 @@ section {
   min-width: 70px;
   min-height: 40px;
   background-color: rgb(38, 132, 255);
-  transition: transform 0.2s ease-in-out;
+  transition: transform 400ms ease, filter 400ms ease;
 }
 
 #output-container {
@@ -338,7 +380,7 @@ section {
 }
 
 button {
-  font-family: 'inter';
+  font-family: "inter";
   height: 30px;
   width: 30px;
   border: none;
@@ -346,6 +388,7 @@ button {
   border-radius: 6px;
   color: #000000;
   transition: transform 100ms ease, filter 800ms ease;
+  cursor: pointer;
 }
 
 button:active {
@@ -369,8 +412,6 @@ button:hover {
 increbtn:active {
   transform: scale(0.9);
 }
-
-
 
 @keyframes fadeIn {
   from {

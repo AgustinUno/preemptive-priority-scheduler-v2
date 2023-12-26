@@ -10,7 +10,7 @@
 </head>
 
 <body>
-
+  
  
 
   <section id="title">
@@ -22,10 +22,21 @@
     <div class="buttons-input">
     <div id="main-buttons">
       <div id="errors"></div>
-    <div class="info">
+    <div class="info" onclick="openModal()">
     </div>
+   
+    <div id="myModal" class="modal">
+      <div class="modalTitle"><p>Preemptive Priority</p></div>
+      <div class="modalSub">
+      <p>Preemptive Priority is a scheduling algorithm in operating systems where tasks are assigned priority levels. Higher-priority tasks can interrupt lower-priority tasks, ensuring that the most critical tasks are executed promptly. This algorithm allows for dynamic task prioritization and is commonly used in real-time systems.</p></div>
+      <button class="close" onclick="closeModal()">OK</button>
+      
+    </div>
+  
+   
     <button class="menu" onclick="toggleDarkMode()"></button>
   </div>
+  
     <section id="input-segment">
       <div class="input-title">Input</div>
       <div class="titleprocess">Number of Process</div>
@@ -144,6 +155,7 @@
 
   <div class="author">Created by Mark Fulguerinas & Justine Bautista &nbsp;&nbsp;|&nbsp;&nbsp; For Educational Purposes Only
     &nbsp;&nbsp;|&nbsp;&nbsp; Operating Systems 2023</div>
+  
   <script src="script.js"></script>
 </body>
 

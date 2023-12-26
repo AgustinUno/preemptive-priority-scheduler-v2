@@ -668,3 +668,20 @@ function showGanttBD() {
   }
 
 }
+
+//info button
+function openModal() {
+  var modal = document.querySelector('.modal');
+  modal.style.display = 'block'; 
+  setTimeout(function() {
+    modal.classList.add('open');
+  }, 20);
+}
+
+function closeModal() {
+  var modal = document.querySelector('.modal');
+  modal.classList.remove('open');
+  setTimeout(function() {
+    modal.style.display = 'none'; 
+  }, 200); 
+}
