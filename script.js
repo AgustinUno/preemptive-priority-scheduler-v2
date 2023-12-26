@@ -685,3 +685,21 @@ function closeModal() {
     modal.style.display = 'none'; 
   }, 200); 
 }
+
+//error button
+function openError() {
+  var modal = document.querySelector('.Error');
+  modal.style.display = 'block'; 
+  setTimeout(function() {
+    modal.classList.add('open');
+  }, 20);
+}
+
+function closeError() {
+  var modal = document.querySelector('.Error');
+  modal.classList.remove('open');
+  setTimeout(function() {
+    modal.style.display = 'none'; 
+  }, 200); 
+}
+

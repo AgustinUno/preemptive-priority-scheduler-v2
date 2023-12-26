@@ -1,3 +1,8 @@
+
+
+
+
+
 @font-face {
   font-family: "Inter";
   src: local("Inter"),
@@ -72,7 +77,7 @@
   border-radius: 7px;
   box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
   margin-left: 10px;
-  transition: transform 0.5s ease, filter 0.5s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
 
@@ -129,6 +134,47 @@
   width: 100px;
   margin-top: 20px;
   margin-bottom: 10px;
+  font-size: 25px;
+
+  
+}
+
+.Error{
+  font-family: "Inter";
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 100px rgba(119, 6, 6, 0.796);
+  z-index: 1000;
+  border-radius: 7px;
+  text-align: center;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.Error.open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.errorTitle{
+  font-family: "Inter";
+  margin: 10px;
+  font-weight: 1000;
+font-size: 20px;
+}
+
+.errorSub{
+margin-left: 15px;
+margin-right: 15px;
+
+}
+.closeError{
+  margin-top: 15px;
+  margin-bottom: 8px;
 }
 
 body {
@@ -206,13 +252,15 @@ section {
   box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
+  transform-origin: center center; /* Set the transform origin to the center */
 }
 
 #errors:hover {
-  transform: scale(1.24);
+  transform: scale(1.1);
   background-color: rgb(0, 225, 255);
   filter: invert(100%);
 }
+
 
 #errors:active {
   transform: scale(0.8);
@@ -489,38 +537,7 @@ increbtn:active {
   }
 }
 
-.glow {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  background-color: #ffffff00;
-  border-radius: 50%;
-  animation: moveGlow 10s infinite;
-  box-shadow: 0 0 1000px 1000px #3612d41a;
-}
 
-@keyframes moveGlow {
-  0%,
-  100% {
-    left: 0;
-    top: 0;
-  }
-
-  25% {
-    left: 50%;
-    top: 0;
-  }
-
-  50% {
-    left: 50%;
-    top: 50%;
-  }
-
-  75% {
-    left: 0;
-    top: 50%;
-  }
-}
 
 #ganttnsol {
   display: flex;

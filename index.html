@@ -21,7 +21,16 @@
   <div id="custom-container">
     <div class="buttons-input">
     <div id="main-buttons">
-      <div id="errors"></div>
+      <div id="errors" onclick="openError()">
+      </div>
+      <div id="myError" class="Error">
+        <div class="errorTitle"><p>Error found!</p></div>
+        <div class="errorSub">
+        <p>Please complete the data needed!</p>
+        <p>(Error detection on progress)</p></div>
+        <button class="closeError" onclick="closeError()"><div class="errorText">&times;</div></button>
+      </div>
+
     <div class="info" onclick="openModal()">
     </div>
    
@@ -29,7 +38,7 @@
       <div class="modalTitle"><p>Preemptive Priority</p></div>
       <div class="modalSub">
       <p>Preemptive Priority is a scheduling algorithm in operating systems where tasks are assigned priority levels. Higher-priority tasks can interrupt lower-priority tasks, ensuring that the most critical tasks are executed promptly. This algorithm allows for dynamic task prioritization and is commonly used in real-time systems.</p></div>
-      <button class="close" onclick="closeModal()">OK</button>
+      <button class="close" onclick="closeModal()"><div class="closeText">&times;</div></button>
       
     </div>
   
