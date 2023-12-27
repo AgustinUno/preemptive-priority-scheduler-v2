@@ -187,6 +187,12 @@ function fetch() {
 
     if (arrivalTime != '' && burstTime != '' && burstTime != 0 && priority != '') {
       incProcess++
+      document.getElementById('errors').style.filter = 'none';
+      document.getElementById('errors').style.backgroundColor = 'white';
+    }else{
+      openError();
+      document.getElementById('errors').style.backgroundColor = 'cyan';
+      document.getElementById('errors').style.filter = 'invert(100%)';
     }
   }
   document.getElementById("output-container").style.display = 'none';
