@@ -214,12 +214,8 @@ html {
   font-weight: 1000;
 }
 
-@media (max-width: 864px) {
-  .title-container {
-    font-size: 2em;
-    font-weight: 1000;
-  }
-}
+
+
 
 .subtitle {
   font-weight: 800;
@@ -232,7 +228,7 @@ html {
   max-width: 3000px;
   max-height: 1000px;
   transition: box-shadow 0.3s ease;
-  min-width: 500px;
+  min-width: 10px;
   backdrop-filter: blur(100px);
   justify-content: center;
   gap: 1em 1em;
@@ -332,10 +328,9 @@ section {
 #table-container {
   background-color: white;
   flex: 50%;
-  width: 50px;
   max-width: 735px;
-  min-width: 300px;
   overflow: auto;
+  
 }
 
 #prcsTbl {
@@ -344,10 +339,13 @@ section {
   border-radius: 10px;
   animation: fadeBackground 0.5s ease-in-out;
   box-sizing: border-box;
+ 
+
 }
 
 #prcsTbl > tr > td {
   text-align: center;
+
 }
 
 #prcsTbl > tr > td > input {
@@ -355,10 +353,12 @@ section {
   text-align: center;
   font-family: "Inter";
   background: transparent;
+  /* width: 25px !important; */
 }
 
 #prcsTbl > tr > td > input:focus {
   outline: none;
+  
 }
 
 /*table animation*/
@@ -753,4 +753,56 @@ p {
   border-radius: 5px;
   text-align: center;
   line-height: 2em;
+}
+
+/* Settings for Mobile responsiveness [Custom]*/
+/* 864px  1st width break*/
+
+@media (max-width: 400px) {
+  .title-container {
+    font-size: 1.5em;
+    font-weight: 1000;
+  }
+  .subtitle {
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+  #custom-container {
+    width: 100%; /* Adjusted to make it responsive */
+  
+  }
+  #table-container {
+   max-width: 280px;
+
+  }
+  #input-segment{
+min-width: 280px;
+min-height: 120px;
+max-height: 40px;
+ 
+  }
+  .input-title{
+    margin-top: 5px;
+  }
+  #gantt-chart{
+width:280px !important;
+ align-self: center;
+  }
+  #solutions{
+    width:280px !important;
+ align-self: center;
+ font-size: 0.8em;
+  }
+  #TAT-title, #TWT-title{
+    font-size: 1em;
+  }
+
+  #gantt-breakdown{
+    width:280px !important;
+ align-self: center;
+  }
+  .author{
+    font-size: 0.5em;
+    text-align: center;
+  }
 }
