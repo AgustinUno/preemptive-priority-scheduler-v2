@@ -794,6 +794,7 @@ p {
   #gantt-chart {
     width: 280px !important;
     align-self: center;
+    overflow: auto;
   }
 
   #solutions {
@@ -815,6 +816,9 @@ p {
   .author {
     font-size: 0.5em;
     text-align: center;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
   }
 
   .modalTitle {
