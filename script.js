@@ -13,7 +13,7 @@ class Queue {
 
   frontQ() {
     return this.items[0];
-  } 
+  }
 
   findProcess(item) {
     let key = 0
@@ -27,6 +27,7 @@ class Queue {
   }
 
   prioSort() {
+    this.items.sort((a, b) => a.name - b.name)
     this.items.sort((a, b) => a.arT - b.arT)
     this.items.sort((a, b) => a.prio - b.prio)
   }
@@ -189,7 +190,7 @@ function fetch() {
       incProcess++
       document.getElementById('errors').style.filter = 'none';
       document.getElementById('errors').style.backgroundColor = 'white';
-    }else{
+    } else {
       openError();
       document.getElementById('errors').style.backgroundColor = 'cyan';
       document.getElementById('errors').style.filter = 'invert(100%)';
@@ -313,7 +314,6 @@ function ganttChart() {
 
   //loop to show all the process in gantt chart
   for (var xq in gantt) {
-    let y = 0;
     // Create cells for Gantt chart
     let ganttCell = document.createElement('div')
     let ganttMsCell = document.createElement('div')
@@ -468,80 +468,77 @@ function output() {
 
 //function for gantt chart breakdown
 function compressedGantt() {
+  let prevGantt = 0
   var showBreakdown = document.getElementById("breakdown-section");
   showBreakdown.style.display = 'none'
 
-  document.getElementById("bdms").style.marginLeft = "55px"
+  document.getElementById("bdms").style.marginLeft = "60px"
 
   //loop to show all the process in gantt chart
   for (let xq in gantt) {
-    let y = 0
     // Create cells for Gantt chart
     let ganttBDRow = document.createElement('div')
-
-
     let width = 0
 
     //sets the process id
     ganttBDRow.id = 'bd-prcs' + gantt[xq].name
     console.log("current p" + gantt[xq].name)
     //set the width equal to turn around time
-    if (gantt[xq].nxtStart[0] != 0) {
-      if (gantt[xq].comRound == 0) {
-        width = gantt[xq].stopTime[0] - gantt[xq].startTime
-        console.log("comround==0 width = " + width)
-        //set the margin equal to arrival time
-        ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
-        ganttBDRow.style.width = width + "em"
-        document.getElementById('compressed').appendChild(ganttBDRow);
-
-        gantt[xq].comRound++;
-
-      }
-      else {
-        if (gantt[xq].stopTime[gantt[xq].comRound] != null) {
-          width = gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStart[gantt[xq].comRound - 1]
-          console.log("comround!=0 width and still has next index= " + width)
-          prevComround = gantt[xq].comRound
-          ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
+    if (gantt[xq].name != prevGantt) {
+      if (gantt[xq].nxtStart[0] != 0) {
+        if (gantt[xq].comRound == 0) {
+          width = gantt[xq].stopTime[0] - gantt[xq].startTime
+          console.log("comround==0 width = " + width)
+          //set the margin equal to arrival time
+          ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
           ganttBDRow.style.width = width + "em"
           document.getElementById('compressed').appendChild(ganttBDRow);
-
-
 
           gantt[xq].comRound++;
 
         }
         else {
+          if (gantt[xq].stopTime[gantt[xq].comRound] != null) {
+            width = gantt[xq].stopTime[gantt[xq].comRound] - gantt[xq].nxtStart[gantt[xq].comRound - 1]
+          
+            prevComround = gantt[xq].comRound
+            ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
+            ganttBDRow.style.width = width + "em"
+            document.getElementById('compressed').appendChild(ganttBDRow);
 
 
-          console.log("comround!=0  and no next index width= " + width)
+            gantt[xq].comRound++;
 
-          width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
-          ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
+          }
+          else {
+
+
+        
+
+            width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
+            ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
 
 
 
-          ganttBDRow.style.width = width + "em"
-          document.getElementById('compressed').appendChild(ganttBDRow);
-          gantt[xq].comRound++;
+            ganttBDRow.style.width = width + "em"
+            document.getElementById('compressed').appendChild(ganttBDRow);
+            gantt[xq].comRound++;
+          }
         }
+      } else {
+        let width = gantt[xq].endTime - gantt[xq].startTime
+        console.log("no stoptime and no next index width= " + width)
+        //set the margin equal to arrival time
+        ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
+        ganttBDRow.style.width = width + "em"
+        document.getElementById('compressed').appendChild(ganttBDRow);
       }
-    } else {
-      let width = gantt[xq].endTime - gantt[xq].startTime
-      console.log("no stoptime and no next index width= " + width)
-      //set the margin equal to arrival time
-      ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
-      ganttBDRow.style.width = width + "em"
-      document.getElementById('compressed').appendChild(ganttBDRow);
+      prevGantt = gantt[xq].name;
     }
-
 
     //sets z-index
     ganttBDRow.style.zIndex = xq
 
-    //holds the name of the process for comparing
-    prevGantt = gantt[xq].Prcsname
   }
   document.getElementById('compressed').style.width = endmsTime + 'em'
 
@@ -665,7 +662,7 @@ function showGanttBD() {
     showIt = 1
   }
   else {
-    document.getElementById("bdms").style.marginLeft = "55px"
+    document.getElementById("bdms").style.marginLeft = "60px"
     showBreakdown.style.display = 'none'
     hideBreakdown.style.display = 'flex'
     showLegend.style.display = 'flex'
@@ -678,8 +675,8 @@ function showGanttBD() {
 //info button
 function openModal() {
   var modal = document.querySelector('.modal');
-  modal.style.display = 'block'; 
-  setTimeout(function() {
+  modal.style.display = 'block';
+  setTimeout(function () {
     modal.classList.add('open');
   }, 20);
 }
@@ -687,16 +684,16 @@ function openModal() {
 function closeModal() {
   var modal = document.querySelector('.modal');
   modal.classList.remove('open');
-  setTimeout(function() {
-    modal.style.display = 'none'; 
-  }, 200); 
+  setTimeout(function () {
+    modal.style.display = 'none';
+  }, 200);
 }
 
 //error button
 function openError() {
   var modal = document.querySelector('.Error');
-  modal.style.display = 'block'; 
-  setTimeout(function() {
+  modal.style.display = 'block';
+  setTimeout(function () {
     modal.classList.add('open');
   }, 20);
 }
@@ -704,8 +701,8 @@ function openError() {
 function closeError() {
   var modal = document.querySelector('.Error');
   modal.classList.remove('open');
-  setTimeout(function() {
-    modal.style.display = 'none'; 
-  }, 200); 
+  setTimeout(function () {
+    modal.style.display = 'none';
+  }, 200);
 }
 
