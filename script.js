@@ -493,7 +493,6 @@ function compressedGantt() {
           ganttBDRow.style.marginLeft = gantt[xq].startTime + "em"
           ganttBDRow.style.width = width + "em"
           document.getElementById('compressed').appendChild(ganttBDRow);
-
           gantt[xq].comRound++;
 
         }
@@ -505,20 +504,12 @@ function compressedGantt() {
             ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
             ganttBDRow.style.width = width + "em"
             document.getElementById('compressed').appendChild(ganttBDRow);
-
-
             gantt[xq].comRound++;
 
           }
-          else {
-
-
-        
-
+          else {       
             width = (gantt[xq].endTime - gantt[xq].nxtStart[gantt[xq].comRound - 1])
             ganttBDRow.style.marginLeft = gantt[xq].nxtStart[gantt[xq].comRound - 1] + "em"
-
-
 
             ganttBDRow.style.width = width + "em"
             document.getElementById('compressed').appendChild(ganttBDRow);
@@ -541,7 +532,6 @@ function compressedGantt() {
 
   }
   document.getElementById('compressed').style.width = endmsTime + 'em'
-
   ganttBreakdown()
 }
 
