@@ -22,8 +22,9 @@
   height: 50px;
   color: black;
   border-radius: 7px;
+
   background: #ffffff;
-  box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
+  box-shadow: #e2e7eb 0px 0px 0px 1.5px;
   background-image: url("Assets/pictures/moon-svgrepo-com.png");
   background-size: cover;
   background-size: 35px;
@@ -38,8 +39,8 @@
 }
 
 .dark-mode {
-  filter: invert(0.9); /* Adjust the invert value as needed */
-  background-color: #010409;
+  filter: invert(1); /* Adjust the invert value as needed */
+  background-color: #0d0d0d;
 }
 
 
@@ -47,7 +48,7 @@
 .menu:hover {
   transform: scale(1.2);
   filter: invert(100%);
-  box-shadow: 0 0 100px 200px rgba(255, 255, 255, 0);
+
 }
 
 .author {
@@ -72,7 +73,8 @@
   width: 50px;
   height: 50px;
   border-radius: 7px;
-  box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
+  
   margin-left: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
@@ -85,7 +87,6 @@
 .info:hover {
   transform: scale(1.2);
   filter: invert(100%);
-  box-shadow: 0 0 100px 200px rgba(255, 255, 255, 0);
 }
 
 .modal {
@@ -191,7 +192,7 @@ body {
   display: flex;
   flex-direction: column;
   padding-top: 1%;
-  background-color: #fafafa;
+  background-color:#ffffff;
   gap: 1em;
   transition: filter 0.3s ease-in-out, background-color 0.3s ease;
 
@@ -255,7 +256,7 @@ section {
   color: black;
   border-radius: 7px;
   pointer-events: none;
-  box-shadow: 0px 0px 15px rgba(22, 1, 255, 0.204);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
   transform-origin: center center;
@@ -277,7 +278,7 @@ section {
 #input-segment {
   font-weight: bold;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px, rgba(15, 91, 206, 0.1) 0px 2px 32px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
   min-width: 200px;
   height: 170px;
   align-self: flex-end;
@@ -330,7 +331,7 @@ section {
 #table-container {
   background-color: white;
   flex: 50%;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px, rgba(15, 91, 206, 0.1) 0px 2px 32px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
   max-width: 735px;
   overflow: auto;
 
