@@ -32,7 +32,7 @@
   margin-left: 10px;
   border-style: solid;
   border-width: 1.5px;
- border-color: #e2e7eb;
+  border-color: #ccd1d7;
 }
 
 .dark-mode .menu {
@@ -76,8 +76,7 @@
   border-radius: 7px;
   border-style: solid;
   border-width: 1.5px;
- border-color: #e2e7eb;
-  
+  border-color: #ccd1d7;
   margin-left: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
@@ -149,10 +148,8 @@
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   background-color: white;
+  box-shadow: 0 0 100px rgba(69, 5, 5, 0.796);
   padding: 20px;
-  border-style: solid;
-  border-width: 1.5px;
- border-color: #e2e7eb;
   z-index: 1000;
   border-radius: 7px;
   text-align: center;
@@ -262,8 +259,8 @@ section {
   border-radius: 7px;
   pointer-events: none;
   border-style: solid;
-  border-width: 1.5px;
- border-color: #e2e7eb;
+  border-width: 1px;
+ border-color: #ccd1d7;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
   transform-origin: center center;
@@ -291,7 +288,7 @@ section {
   background-color: white;
   border-style: solid;
   border-width: 1.5px;
- border-color: #e2e7eb;
+  border-color: #ccd1d7;
   min-width: 200px;
   height: 170px;
   align-self: flex-end;
@@ -332,7 +329,7 @@ section {
 }
 
 .ok {
-  background-color: rgb(102, 255, 0);
+  background-color: rgb(104, 255, 4);
   margin-left: 5px;
   background-image: url("Assets/pictures/mark.png");
   /* Set the path to your image */
@@ -346,7 +343,7 @@ section {
   flex: 50%;
   border-style: solid;
   border-width: 1.5px;
- border-color: #e2e7eb;
+  border-color: #ccd1d7;
   max-width: 735px;
   overflow: auto;
 
@@ -354,8 +351,8 @@ section {
 
 #prcsTbl {
   padding: 30px;
-  background-color: #00000021;
-  border-radius: 10px;
+  background-color: #e8e8e9;
+  border-radius: 7px;
   animation: fadeBackground 0.5s ease-in-out;
   box-sizing: border-box;
 
@@ -574,7 +571,7 @@ increbtn:active {
   gap: 1em;
   border-style: solid;
   border-width: 1.5px;
- border-color: #e2e7eb;
+  border-color: #ccd1d7;
  border-radius: 7px;
 }
 
@@ -639,7 +636,7 @@ p {
 
   border-style: solid;
   border-width: 1.5px;
- border-color: #e2e7eb;
+  border-color: #ccd1d7;
 }
 
 #breakdown-section {
