@@ -22,9 +22,7 @@
   height: 50px;
   color: black;
   border-radius: 7px;
-
   background: #ffffff;
-  box-shadow: #e2e7eb 0px 0px 0px 1.5px;
   background-image: url("Assets/pictures/moon-svgrepo-com.png");
   background-size: cover;
   background-size: 35px;
@@ -32,6 +30,9 @@
   background-position: center;
   transition: transform 0.5s ease, filter 0.5s ease, box-shadow 0.5s ease;
   margin-left: 10px;
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
 }
 
 .dark-mode .menu {
@@ -39,8 +40,8 @@
 }
 
 .dark-mode {
-  filter: invert(1); /* Adjust the invert value as needed */
-  background-color: #0d0d0d;
+  filter: invert(0.98); /* Adjust the invert value as needed */
+  background-color: #000000;
 }
 
 
@@ -73,7 +74,9 @@
   width: 50px;
   height: 50px;
   border-radius: 7px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
   
   margin-left: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
@@ -147,7 +150,9 @@
   transform: translate(-50%, -50%) scale(0.8);
   background-color: white;
   padding: 20px;
-  box-shadow: 0 0 100px rgba(119, 6, 6, 0.796);
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
   z-index: 1000;
   border-radius: 7px;
   text-align: center;
@@ -256,7 +261,9 @@ section {
   color: black;
   border-radius: 7px;
   pointer-events: none;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
   transform-origin: center center;
@@ -275,10 +282,16 @@ section {
   filter: brightness(0.5);
 }
 
+
+
+
+
 #input-segment {
   font-weight: bold;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
   min-width: 200px;
   height: 170px;
   align-self: flex-end;
@@ -331,7 +344,9 @@ section {
 #table-container {
   background-color: white;
   flex: 50%;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px;
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
   max-width: 735px;
   overflow: auto;
 
@@ -388,7 +403,8 @@ section {
 
 #output-container {
   display: flex;
-  justify-content: center;
+justify-content:center;
+align-items: flex-start;
   gap: 1em;
   flex-wrap: wrap;
 }
@@ -556,6 +572,10 @@ increbtn:active {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
+ border-radius: 7px;
 }
 
 #solutions {
@@ -616,6 +636,10 @@ p {
   flex-direction: column;
   height: fit-content;
   min-width: fit-content;
+
+  border-style: solid;
+  border-width: 1.5px;
+ border-color: #e2e7eb;
 }
 
 #breakdown-section {
@@ -810,11 +834,6 @@ p {
   #TAT-title,
   #TWT-title {
     font-size: 1em;
-  }
-
-  #gantt-breakdown {
-    width: 280px !important;
-    align-self: center;
   }
 
   .author {
