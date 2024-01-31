@@ -190,7 +190,7 @@ function fetch() {
     let burstTime = document.getElementById('brsTime' + (x + 1)).value
     let priority = document.getElementById('prio' + (x + 1)).value
 
-    if (arrivalTime != '' && burstTime != '' && burstTime >= 0 && priority != '' && arrivalTime >= 0 && priority >= 0 ) {
+    if (arrivalTime != '' && burstTime != '' && burstTime  > 0 && priority != '' && arrivalTime >= 0 && priority >= 0 ) {
       incProcess++
       document.getElementById('errors').style.filter = 'none';
       document.getElementById('errors').style.backgroundColor = 'white';
