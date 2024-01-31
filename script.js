@@ -1,3 +1,5 @@
+
+//a class of function that works as queue
 class Queue {
   constructor() {
     this.items = [];
@@ -26,6 +28,7 @@ class Queue {
     return true
   }
 
+  //sorts the queue of priorities
   prioSort() {
     this.items.sort((a, b) => a.name - b.name)
     this.items.sort((a, b) => a.arT - b.arT)
@@ -155,6 +158,7 @@ function createTable() {
     "<button id='cmpte' onClick=fetch()>Solve</button>"
 }
 
+//gets the data and checks also for various circumstances
 function fetch() {
   gantt = []
   showIt = 0
@@ -186,7 +190,7 @@ function fetch() {
     let burstTime = document.getElementById('brsTime' + (x + 1)).value
     let priority = document.getElementById('prio' + (x + 1)).value
 
-    if (arrivalTime != '' && burstTime != '' && burstTime != 0 && priority != '') {
+    if (arrivalTime != '' && burstTime != '' && burstTime >= 0 && priority != '' && arrivalTime >= 0 && priority >= 0 ) {
       incProcess++
       document.getElementById('errors').style.filter = 'none';
       document.getElementById('errors').style.backgroundColor = 'white';
